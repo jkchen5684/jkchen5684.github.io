@@ -37,7 +37,7 @@
 
 .box1 {
     position: absolute;
-    top: 100px;
+    top: 350px;
     left: 650px;
     height: 50px;
     border-style: groove;
@@ -45,7 +45,7 @@
 
 .box2 {
     position: absolute;
-    top: 100px;
+    top: 350px;
     left: 10px;
     height: 50px;
     border-style: dotted;
