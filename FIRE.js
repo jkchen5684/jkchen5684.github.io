@@ -281,13 +281,19 @@ function fireMain(price) {
 
     //Error Checking.
     if(!originincome || !spending || (!wealth && wealth!=0 || !target)) {
-        document.getElementById("Warning").innerHTML = "Please Input all FIRE Input Fields";
+        //document.getElementById("Warning").innerHTML = "Please Input all FIRE Input Fields";
+        //<strong>Danger!</strong> "You should" <a href="#" class="alert-link">"read this message"</a>
+        document.getElementById("Warning").style.display="block";
+        document.getElementById("Warning").innerHTML="Please input income, spending";
+        console.log("error");
         document.getElementById("target").innerHTML="";
         document.getElementById("yrs2ret").innerHTML="";
         err=1;
         //dvTable.appendChild(table);
     }
     else {
+        document.getElementById("Warning").style.display="none";
+        document.getElementById("Warning").innerHTML="";
         lastyear=wealth;
         for (i = 1; i < 100 ;i++)
         {
@@ -312,6 +318,7 @@ function fireMain(price) {
     if (err!=1) {
         notes="";
         document.getElementById("Warning").innerHTML="";
+        document.getElementById("Warning").style.display="none";
         var i=1;
         document.getElementById("target").innerHTML="Target Amount Needed for Retirement: " + dollar.format(target)
         //Headers
