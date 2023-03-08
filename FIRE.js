@@ -477,7 +477,7 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border){
     dvTable.appendChild(table);
 
     var extraInfo = document.createElement("TR");
-    extraInfo.innerHTML = "HELLO";
+    extraInfo.innerHTML = "test123";
 }
 
 
