@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tax Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="../FIRE.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="../FIRE.js"></script>
+  <script src="../FIRE_API.js"></script>
+</head>
+<body onload="loadcode()">
+    <div class="jumbotron text-center" style="margin-bottom:0">
+        <h1>Josh's website - Last updated 3/8/2023</h1>
+    </div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <a class="navbar-brand" href="https://jkchen5684.github.io/">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="https://jkchen5684.github.io/boot.html">BootStrap Practice</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="https://jkchen5684.github.io/new/tax.html">Tax-Calculator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://jkchen5684.github.io/new/tax2.html">Tax-Calculator2</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://jkchen5684.github.io/new/fire_table.html">FIRE-Calculator</a>
+        </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://www.google.com">GTFO</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="https://jkchen5684.github.io/archive/taxcalc.html">Archived Tax Calculator</a>
+          </li>      
+        </ul>
+      </div>  
+    </nav>
+    <br>
+    <p>Last Updated 9/8 11:43AM</p>
+    
+
+    <div class="container">
+      <table width="600" >
+        <tr>
+            <td width="400"></td><td width="200"></td>
+        </tr>
+        <tr>
+            <th colspan="2" class="left" style="color: darkblue" >Income Inputs</th>
+        </tr>
+        <tr>
+            <td>Filing Status</td>
+            <td>
+                <form action="/action_page.php">
+                    <select name="filingstatus" id="filingstatus" onchange="yesnoCheck(this.value)">
+                        <option value="single">Single</option>
+                        <option value="married">Married</option>
+                    </select>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td id="income1">.. Income for wage earner 1</td>
+            <td><input id="income1input" type="number" size="50" min="0" max="1000000" step="1000" value="" onchange="sumwages()"></td>
+        </tr>
+        <tr>
+            <td id="income2" style="display: none;">.. Income for wage earner 2</td>
+            <td><input id="income2input" style="display: none;" type="number" size="50" min="0" max="1000000" step="1000" value="" onchange="sumwages()"></td>
+        </tr>
+        <tr>
+            <td style="display: none1;">Gross Wages (Calculated Pre-tax)</td>
+            <td><input type="number" size="50" min="0" max="1000000" step="1000" id="incomePre" value="" style="display: none1;" disabled="disabled"></td>
+        </tr>
+        <tr><td colspan="2" id="income12blank" style="display: none;" class="blank_row"></td></tr>
+        
+        <tr>
+            <td>State where you live</td>
+            <td>
+                <form action="/action_page.php">
+                    <select name="state" id="state">
+                        <option value="Alabama">Alabama</option><option value="Alaska">Alaska</option><option value="Arizona">Arizona</option><option value="Arkansas">Arkansas</option><option value="California">California</option><option value="Colorado">Colorado</option>
+                        <option value="Connecticut">Connecticut</option><option value="Delaware">Delaware</option><option value="Florida">Florida</option><option value="Georgia">Georgia</option><option value="Hawaii">Hawaii</option><option value="Idaho">Idaho</option>
+                        <option value="Illinois">Illinois</option><option value="Indiana">Indiana</option><option value="Iowa">Iowa</option><option value="Kansas">Kansas</option><option value="Kentucky">Kentucky</option><option value="Louisiana">Louisiana</option>
+                        <option value="Maine">Maine</option><option value="Maryland">Maryland</option><option value="Massachusetts">Massachusetts</option><option value="Michigan">Michigan</option><option value="Minnesota">Minnesota</option><option value="Mississippi">Mississippi</option>
+                        <option value="Missouri">Missouri</option><option value="Montana">Montana</option><option value="Nebraska">Nebraska</option><option value="Nevada">Nevada</option><option value="New Hampshire">New Hampshire</option><option value="New Jersey">New Jersey</option>
+                        <option value="New Mexico">New Mexico</option><option value="New York">New York</option><option value="North Carolina">North Carolina</option><option value="North Dakota">North Dakota</option><option value="Ohio">Ohio</option><option value="Oklahoma">Oklahoma</option>
+                        <option value="Oregon">Oregon</option><option value="Pennsylvania">Pennsylvania</option><option value="Rhode Island">Rhode Island</option><option value="South Carolina">South Carolina</option><option value="South Dakota">South Dakota</option>
+                        <option value="Tennessee">Tennessee</option><option value="Texas">Texas</option><option value="Utah">Utah</option><option value="Vermont">Vermont</option><option value="Virginia">Virginia</option><option value="Washington">Washington</option>
+                        <option value="West Virginia">West Virginia</option><option value="Wisconsin">Wisconsin</option><option value="Wyoming">Wyoming</option>
+                    </select>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Pre-Tax Retirement Contributions ($)</td>
+            <td><input type="number" onchange="copyfield(this.value,'retirementincome'); CalcSaved(this.value,3)" size="50" id="ira" min="0" max="40000" step="1000" value=""></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" value="Calculate my net income" onclick="CalcIncome()"></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="underline"></td>
+        </tr>
+        <!-- BOX 2 TAX BOTTOM-------------------------------------------------------------->
+        <tr><td colspan="2" class="blank_row" id="taxerror" style="color:red"></td></tr>
+        <tr>
+            <td colspan="2">
+                <div class="dropdown">
+                    <span id="agi"></span>
+                    <div class="dropdown-content">
+                        <div id="agibox"></div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr>
+            <th id="taxhead1" class="left"></th><th id="taxhead2" class="left"></th>
+        </tr>
+
+       
+        <tr>
+             <!--POPUP STATE -----------------------------------------------------------------
+            -----------------------------------------------------------------------------------
+            -----------------------------------------------------------------------------------
+            -->
+            <td>
+                <div class="dropdown">
+                    <span id="statetax"></span>
+                    <div class="dropdown-content">
+                        <p id="stateagi"></p>
+                        <div id="statetaxbox"></div>
+                    </div>
+                  </div>
+            </td>
+             <!--POPUP FEDERAL -----------------------------------------------------------------
+            ------------------------------------------------------------------------------------
+            ------------------------------------------------------------------------------------
+            -->
+            <td>
+                <div class="dropdown">
+                    <span id="fedtax"></span>
+                    <div class="dropdown-content">
+                        <p id="fedagi"></p>
+                        <div id="fedtaxbox"></div>
+                    </div>
+                  </div>
+            </td>
+           
+        </tr>
+        
+        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr><td colspan="2" class="blank_row"></td></tr>
+
+        <!--Payroll Tax
+        -----------------------------------------------------------------------------------
+        -----------------------------------------------------------------------------------
+        -->
+        <tr>
+            <th colspan="2" id="payrolltaxhead" class="left"></th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="dropdown">
+                    <span id="payrolltax"></span>
+                    <div class="dropdown-content">
+                        <div id="payrolltaxbox"></div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr><td colspan="2" class="underlinedotted" id="underline" style="display: none;"></td></tr>
+        <tr><td colspan="2" class="blank_row"></td></tr>
+
+        <!--Grand Total Tax
+        -----------------------------------------------------------------------------------
+        -----------------------------------------------------------------------------------
+        -->
+        <tr><th colspan="2" id="totaltaxhead" class="left" ></th></tr>
+        <tr><td colspan="2" id="totaltax" style="color:rgb(105, 21, 21)"></td></tr>
+        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr><td colspan="2" class="underlinedouble" id="underline2" style="display: none;"></td></tr>
+        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr><th colspan="2" id="netincomehead" class="left"></th></tr>
+        <tr><td colspan="2" id="netincome" ></td></tr>
+        <tr><td colspan="2" class="blank_row"></td></tr>
+    </table>
+    </div>
+</body>
+</html>
