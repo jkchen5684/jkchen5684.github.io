@@ -79,8 +79,6 @@ function CalcIncome() {
     } else if(filingstatus=="single" && retirement>22500) {
         errflag=1;
         loadDef(2);
-        document.getElementById("taxerror").innerHTML="You cannot contribute more than $19,500 per year as a single filer";
-    } else if(filingstatus=="married" && retirement>39000) {
         document.getElementById("taxerror").innerHTML="You cannot contribute more than $22,500 per year as a single filer";
     } else if(filingstatus=="married" && retirement>45000) {
         errflag=1;
