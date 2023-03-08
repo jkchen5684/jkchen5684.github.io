@@ -475,6 +475,7 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border){
     var dvTable = document.getElementById(element);
     dvTable.innerHTML = "";
     dvTable.appendChild(table);
+    cell.innerHTML = "HELLO";
 }
 
 
