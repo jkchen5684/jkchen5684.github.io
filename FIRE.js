@@ -83,7 +83,7 @@ function CalcIncome() {
     } else if(filingstatus=="married" && retirement>39000) {
         errflag=1;
         loadDef(2);
-        document.getElementById("taxerror").innerHTML="You cannot contribute more than $39,000 per year as a single filer";
+        document.getElementById("taxerror").innerHTML="You cannot contribute more than $45,000 per year filing jointly";
     }
     if(filingstatus=="married" && (!document.getElementById("income1input").value || !document.getElementById("income2input").value)) {
         errflag=1;
@@ -281,13 +281,19 @@ function fireMain(price) {
 
     //Error Checking.
     if(!originincome || !spending || (!wealth && wealth!=0 || !target)) {
-        document.getElementById("Warning").innerHTML = "Please Input all FIRE Input Fields";
+        //document.getElementById("Warning").innerHTML = "Please Input all FIRE Input Fields";
+        //<strong>Danger!</strong> "You should" <a href="#" class="alert-link">"read this message"</a>
+        document.getElementById("Warning").style.display="block";
+        document.getElementById("Warning").innerHTML="Please input income, spending";
+        console.log("error");
         document.getElementById("target").innerHTML="";
         document.getElementById("yrs2ret").innerHTML="";
         err=1;
         //dvTable.appendChild(table);
     }
     else {
+        document.getElementById("Warning").style.display="none";
+        document.getElementById("Warning").innerHTML="";
         lastyear=wealth;
         for (i = 1; i < 100 ;i++)
         {
@@ -312,6 +318,7 @@ function fireMain(price) {
     if (err!=1) {
         notes="";
         document.getElementById("Warning").innerHTML="";
+        document.getElementById("Warning").style.display="none";
         var i=1;
         document.getElementById("target").innerHTML="Target Amount Needed for Retirement: " + dollar.format(target)
         //Headers
@@ -468,6 +475,7 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border){
     var dvTable = document.getElementById(element);
     dvTable.innerHTML = "";
     dvTable.appendChild(table);
+    cell.innerHTML = "HELLO";
 }
 
 
