@@ -76,7 +76,6 @@ function CalcIncome() {
         loadDef(2);
         document.getElementById("taxerror").innerHTML="Please Input a Gross Income to Calculate Taxes";
         document.getElementById("incomePre").value=""
-    } else if(filingstatus=="single" && retirement>19500) {
     } else if(filingstatus=="single" && retirement>22500) {
         errflag=1;
         loadDef(2);
