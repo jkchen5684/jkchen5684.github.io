@@ -107,12 +107,13 @@ function CalcIncome() {
         document.getElementById("taxhead1").innerHTML="State Income Tax - "+state;
         document.getElementById("payrolltaxhead").innerHTML="Payroll Tax (Social Security + Medicare/aide)";
         document.getElementById("taxhead2").innerHTML="Federal Income Tax";
-        
 
-        //1.  Adjust Gross Income
+        //1.  Gross Income & Adjusted
         //
         modifiedincome=Math.max(income-brackets.deduction(filingstatus)-retirement,0);  //AGI
+        document.getElementById("gross income").innerHTML="Gross Income: "+dollar.format(modifiedincome)+" <i class=\"fa fa-question-circle\"></i>";
         document.getElementById("agi").innerHTML="Adjusted Gross Income (AGI): "+dollar.format(modifiedincome)+" <i class=\"fa fa-question-circle\"></i>";
+        document.getElementById("agitext").innerHTML="Adjusted Gross Income is what we actually compute your taxes off of after deducting the below from your income"
         var taxtable = new Array();
         taxtable.push(["Deduction","Amount Income Reduced"]);  //Set Row Headers
         taxtable.push(["Standard deduction for "+filingstatus+" filers.",dollar.format(brackets.deduction(filingstatus))]);
@@ -154,12 +155,11 @@ function CalcIncome() {
         document.getElementById("statetax").innerHTML=dollar.format(statetotaltax)+" "+"<i class=\"fa fa-question-circle\"></i>";
         val=modifiedincome;
         modifiedincome=modifiedincome-statetotaltax;
-        document.getElementById("fedagi").innerHTML="Federal AGI: "+dollar.format(modifiedincome)+"<BR> &nbsp&nbsp • Computed from AGI ("+dollar.format(val)+") - State Income Tax ("+dollar.format(statetotaltax)+").";
-        document.getElementById("fedagi").style.fontSize="14px";
-
         
         //3.  Popup for Federal Income Tax
         //
+        document.getElementById("fedagi").innerHTML="Federal AGI: "+dollar.format(modifiedincome)+"<BR> &nbsp&nbsp • Computed from AGI ("+dollar.format(val)+") - State Income Tax ("+dollar.format(statetotaltax)+").";
+        document.getElementById("fedagi").style.fontSize="14px";
         taxtable=[];  //clear the array
         lbrackets=brackets.data(filingstatus);
         taxtable.push(["Income Bracket","Your Tax"]);
@@ -475,8 +475,6 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border){
     var dvTable = document.getElementById(element);
     dvTable.innerHTML = "";
     dvTable.appendChild(table);
-    var nfo=document.createElement("TR")
-    nfo.innerHTML="Testing123"
 
 }
 
@@ -511,7 +509,7 @@ function yesnoCheck(value) {
         document.getElementById("income1input").style.display = "block";
         document.getElementById("income2").style.display = "none";
         document.getElementById("income2input").style.display = "none";
-        document.getElementById("income12blank").style.display = "none";
+        //document.getElementById("income12blank").style.display = "none";
         document.getElementById("incomePre").value = "";
         document.getElementById("income1input").value="";
         document.getElementById("income2input").value="";
@@ -581,6 +579,21 @@ function sumwages() {
     }
     else if (wage2>0) {
         document.getElementById("incomePre").value = wage2;
+    }
+
+    if (wage1>0) {
+        document.getElementById("incomePre").style="visibility: visible";
+        document.getElementById("grossWageLabel").style="visibility: visible";
+        //document.getElementById("req1").innerHTML="<i class=\"fa fa-check-circle-o\"></i>";
+        document.getElementById("req1").className="fa fa-check-circle-o";
+        document.getElementById("req1").style="color:Green";
+    } else {
+        document.getElementById("incomePre").style="visibility: hidden";
+        document.getElementById("grossWageLabel").style="visibility: hidden";
+        //document.getElementById("req1").innerHTML="<i class=\"fa fa-dot-circle-o\"></i>";
+        document.getElementById("req1").className="fa fa-dot-circle-o";
+        document.getElementById("req1").style="color:Red";
+        
     }
 }
 

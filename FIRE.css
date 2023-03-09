@@ -17,6 +17,11 @@
     text-align: center;
 }
 
+.top 
+{
+    vertical-align: top;
+    left: -10px;
+}
 .highlightyellow {
     background-color: yellow;
   }
@@ -53,7 +58,7 @@
 }
 
 .underline {
-    border-style: none none solid none;
+    border-style: none none solid none; 
 }
 .underlinedotted {
     border-style: none none dotted none;
@@ -61,11 +66,19 @@
 .underlinedouble {
     border-style: none none double none;
 }
+.thinborder {
+    border-style: none none solid none;
+    border-width: 1px;
+}
 
 
-  .blank_row
+.blank_row
 {
     height: 10px !important; /* overwrites any other rules */
+}
+.narrowblank_row
+{
+    height: 4px !important; /* overwrites any other rules */
 }
 
 .dropdown {

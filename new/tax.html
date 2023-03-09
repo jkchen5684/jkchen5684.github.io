@@ -48,47 +48,51 @@
       </div>  
     </nav>
     <br>
-    <p>Last Updated 9/8 11:43AM</p>
     
 
     <div class="container">
-      <table width="600" >
+      <table width="550" >
         <tr>
-            <td width="400"></td><td width="200"></td>
+            <td width="350"></td><td width="150"></td><td width="50"></td>
         </tr>
         <tr>
-            <th colspan="2" class="left" style="color: darkblue" >Income Inputs</th>
+            <th colspan="3" class="left" style="color: darkgreen" >Income</th>
         </tr>
         <tr>
             <td>Filing Status</td>
             <td>
                 <form action="/action_page.php">
-                    <select name="filingstatus" id="filingstatus" onchange="yesnoCheck(this.value)">
+                    <select name="filingstatus" id="filingstatus" style="width: 140px; height: 25px" onchange="yesnoCheck(this.value)">
                         <option value="single">Single</option>
                         <option value="married">Married</option>
                     </select>
                 </form>
             </td>
         </tr>
+        <tr><td colspan="3" class="narrowblank_row"></td></tr>
         <tr>
-            <td id="income1">.. Income for wage earner 1</td>
-            <td><input id="income1input" type="number" size="50" min="0" max="1000000" step="1000" value="" onchange="sumwages()"></td>
+            <td><i id="income1"></i>.. Income for wage earner 1</td>  
+            <td><input id="income1input" type="number" size="50" style="width: 140px;" min="0" max="1000000" step="1000" value="" onchange="sumwages()"></td>
+            <td><i id="req1" class="fa fa-dot-circle-o" style="color: Red"></i></td>
         </tr>
         <tr>
             <td id="income2" style="display: none;">.. Income for wage earner 2</td>
-            <td><input id="income2input" style="display: none;" type="number" size="50" min="0" max="1000000" step="1000" value="" onchange="sumwages()"></td>
+            <td><input id="income2input" style="display: none; width: 140px;" type="number" size="50" min="0" max="1000000" step="1000" value="" onchange="sumwages()"></td>
         </tr>
+        <tr><td colspan="3" class="thinborder"></td></tr><tr><td colspan="3" id="income12blank" class="narrowblank_row"></td></tr>
         <tr>
-            <td style="display: none1;">Gross Wages (Calculated Pre-tax)</td>
-            <td><input type="number" size="50" min="0" max="1000000" step="1000" id="incomePre" value="" style="display: none1;" disabled="disabled"></td>
+            <td id="grossWageLabel" style="visibility: hidden;">Gross Wages (Calculated Pre-tax)</td>
+            <td><input type="number" size="50" min="0" max="1000000" step="1000" id="incomePre" value="" style="visibility: hidden;" disabled="disabled"></td>
         </tr>
-        <tr><td colspan="2" id="income12blank" style="display: none;" class="blank_row"></td></tr>
-        
+        <tr><td colspan="3" id="income12blank" class="blank_row"></td></tr>
+        <tr>
+            <th colspan="3" class="left" style="color: darkblue" >Optional Inputs</th>
+        </tr>
         <tr>
             <td>State where you live</td>
             <td>
                 <form action="/action_page.php">
-                    <select name="state" id="state">
+                    <select name="state" id="state" style="width: 140px; height: 25px">
                         <option value="Alabama">Alabama</option><option value="Alaska">Alaska</option><option value="Arizona">Arizona</option><option value="Arkansas">Arkansas</option><option value="California">California</option><option value="Colorado">Colorado</option>
                         <option value="Connecticut">Connecticut</option><option value="Delaware">Delaware</option><option value="Florida">Florida</option><option value="Georgia">Georgia</option><option value="Hawaii">Hawaii</option><option value="Idaho">Idaho</option>
                         <option value="Illinois">Illinois</option><option value="Indiana">Indiana</option><option value="Iowa">Iowa</option><option value="Kansas">Kansas</option><option value="Kentucky">Kentucky</option><option value="Louisiana">Louisiana</option>
@@ -104,21 +108,30 @@
         </tr>
         <tr>
             <td>Pre-Tax Retirement Contributions ($)</td>
-            <td><input type="number" onchange="copyfield(this.value,'retirementincome'); CalcSaved(this.value,3)" size="50" id="ira" min="0" max="40000" step="1000" value=""></td>
+            <td><input type="number" onchange="copyfield(this.value,'retirementincome'); CalcSaved(this.value,3)" size="50" id="ira" min="0" max="40000" step="1000" value="" style="width: 140px"></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="button" value="Calculate my net income" onclick="CalcIncome()"></td>
+            <td colspan="3"><input type="button" value="Calculate my net income" onclick="CalcIncome()"></td>
         </tr>
         <tr>
-            <td colspan="2" class="underline"></td>
+            <td colspan="3" class="underline"></td>
         </tr>
+    </table>
+</div><!---JKC-->
         <!-- BOX 2 TAX BOTTOM-------------------------------------------------------------->
+<div class="container">
+    <table width="550" >
+        <tr>
+            <td width="275"></td><td width="275"></td>
+        </tr>
         <tr><td colspan="2" class="blank_row" id="taxerror" style="color:red"></td></tr>
+        <tr><td colspan="2"><span id="gross income"></span></td></tr>
         <tr>
             <td colspan="2">
                 <div class="dropdown">
                     <span id="agi"></span>
                     <div class="dropdown-content">
+                        <p id="agitext"></p>
                         <div id="agibox"></div>
                     </div>
                 </div>
@@ -200,5 +213,6 @@
         <tr><td colspan="2" class="blank_row"></td></tr>
     </table>
     </div>
+    <p>Last Updated 9/8 11:43AM</p>
 </body>
 </html>
