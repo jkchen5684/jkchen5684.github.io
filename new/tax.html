@@ -9,10 +9,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="../FIRE.css">
+  <link rel="stylesheet" href="../new/FIRE.css">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="../FIRE.js"></script>
+  <script src="../new/FIRE.js"></script>
   <script src="../FIRE_API.js"></script>
 </head>
 <body onload="loadcode()">
@@ -49,11 +49,21 @@
     </nav>
     <br>
     
+
+
+    <div class="container">
+    <p>This is Josh Chen's super basic tax calculator, which I built as a functionally quick way to 'gut-check' one's taxes and income.  This isn't meant as financial advice, it is purely a tool to estimate.  </p>
+    <p>Copyright 2023 Josh Chen... maybe...  hopefully...</p>
+    </div>
     <!--Tax Year Drowndown-->
     <div class="container"><table width="170" >
+        <tr><td class="blank_row"></td></tr>
+        <tr><td class="blank_row"></td></tr>
         <tr><td width="80">Tax Year</td>
         <td width="80"><form action="/action_page.php"><select name="Taxyear" id="Taxyear" style="width: 80px; height: 25px"><option value="2022" selected>2022</option><option value="2023">2023</option></select></form></td>
-    </tr></table></div>
+    </tr>
+    <tr><td><input type="button" value="Default stuff" onclick="Defaultstuff()"></td></tr></tr>
+    </table></div>
 
     <div class="container"><table width="320" >
     <!--State Where you Live-->
@@ -86,8 +96,8 @@
                         <option value="single">Single</option>
                         <option value="married">Married</option></select></form></td></tr>
         <!--Income Inputs-->
-        <tr><td id="income1" style="padding:3px;">.. Income for wage earner 1</td>  
-            <td id="income1i" style="text-align:right;">
+        <tr><td style="padding:3px;">.. Income for wage earner 1</td>  
+            <td style="text-align:right;">
                 <!--<div class="input-group">-->
                 <span>$</span>
                 <input id="income1input" type="number" size="50" style="width: 100px;" min="0" max="1000000" step="100" class="currency" value="" onchange="sumwages()">
@@ -120,21 +130,48 @@
         
         <!--Retirement-->
         <tr><td style="padding:3px;">401k/403b/IRA Contributions</td>
-            <td><input type="number" onchange="copyfield(this.value,'retirementincome'); CalcSaved(this.value,3)" size="50" id="ira" min="0" max="40000" step="1000" value="" style="width: 140px"></td></tr>
+            <td style="text-align:right;"><span>$</span><input type="number" size="50" id="ira" min="0" max="40000" step="1000" value="" style="width: 100px"></td></tr>
+        <!--Interest & Dividends-->
+        <tr><td style="padding:3px;">Interest & Dividends</td>
+            <td style="text-align:right;"><span>$</span><input type="number" size="50" id="dividends" min="0" max="40000" step="1000" value="" style="width: 100px"></td></tr>
+        <!--Capital Gains LT-->
+        <tr><td style="padding:3px;">Long Term Capital Gains</td>
+            <td style="text-align:right;"><span>$</span><input type="number" size="50" id="gainsLT" min="0" max="40000" step="1000" value="" style="width: 100px"></td></tr>
+        <!--Capital Gains ST-->
+        <tr><td style="padding:3px;">Short Term Capital Gains</td>
+            <td style="text-align:right;"><span>$</span><input type="number" size="50" id="gainsST" min="0" max="40000" step="1000" value="" style="width: 100px"></td></tr>
         <!--Calculate Button-->
         <tr><td colspan="1" style="padding:5px;"><input type="button" value="Calculate my taxes" onclick="CalcIncome()"></td>
         <!--Clear Button-->
-        <td colspan="1" style="padding:5px;"><input type="button" value="Clear" onclick=""></td></tr>
+        <td colspan="1" style="padding:5px;text-align:right;"><input type="button" value="Clear" onclick="Cleareverything()"></td></tr>
     </table>
 </div>
-        <!-- BOX 2 TAX BOTTOM-------------------------------------------------------------->
+
 <div class="container">
-    <table width="475" id="bottomTable">
-        <tr>
-            <td width="300"></td><td width="175"></td>
+<p class="blank_row" id="taxerror" style="color:red; display:none;"></p>
+</div>
+
+<!-- BOX 2 TAX BOTTOM-------------------------------------------------------------->
+<div class="container">
+    <table width="475" id="bottomTable" style="visibility:hidden">
+        <tr style="background-color:rgb(247, 155, 122);">
+            <td width="200"></td><td width="275"></td>
         </tr>
-        <tr><td colspan="2" class="blank_row" id="taxerror" style="color:red"></td></tr>
-        <tr><td colspan="2"><span id="gross income"></span></td></tr>
+        <!--INCOME BREAKDOWN-->
+        <tr><td colspan="2" style="font-weight:bold;background-color:rgb(247, 155, 122);">Income Breakdown</td></tr>
+        <tr><td colspan="2" class="narrowblank_row"></td></tr>
+        <tr>
+            <td colspan="2">
+                <span id="gross income"></span>
+                <div class="dropdown">
+                    <span id="gross?"></span>
+                    <div class="dropdown-content">
+                        <p id="grosstext"></p>
+                        <div id="grossbox"></div>
+                    </div>
+                </div>
+            </td>
+        </tr>
         <tr>
             <td colspan="2">
                 <span id="agi"></span>
@@ -147,33 +184,16 @@
                 </div>
             </td>
         </tr>
-
         <tr><td colspan="2" class="blank_row"></td></tr>
-        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr><td colspan="2" class="underlinedouble" id="underline3" style="display: none;"></td></tr>
+        <!--TAX BREAKDOWN-->
+        <tr><td colspan="2" style="font-weight:bold;background-color:rgb(247, 155, 122);">Tax Breakdown</td></tr>
+        <tr><td colspan="2" class="narrowblank_row"></td></tr>
         <tr>
-            <th id="taxhead1" class="left"></th><th id="taxhead2" class="left"></th>
+            <th id="taxhead1" class="left">Federal Income Tax</th><th id="taxhead2" class="left"></th>
         </tr>
-
-       
         <tr>
-             <!--POPUP STATE -----------------------------------------------------------------
-            -----------------------------------------------------------------------------------
-            -----------------------------------------------------------------------------------
-            -->
-            <td>
-                <span id="statetax"></span>
-                <div class="dropdown">
-                    <span id="statetax?"></span>
-                    <div class="dropdown-content">
-                        <p id="stateagi"></p>
-                        <div id="statetaxbox"></div>
-                    </div>
-                  </div>
-            </td>
-             <!--POPUP FEDERAL -----------------------------------------------------------------
-            ------------------------------------------------------------------------------------
-            ------------------------------------------------------------------------------------
-            -->
+             <!--Federal Tax-->
             <td>
                 <span id="fedtax"></span>
                 <div class="dropdown">
@@ -184,18 +204,22 @@
                     </div>
                   </div>
             </td>
-           
+           <!--State Tax-->
+            <td>
+                <span id="statetax"></span>
+                <div class="dropdown">
+                    <span id="statetax?"></span>
+                    <div class="dropdown-content">
+                        <p id="stateagi"></p>
+                        <div id="statetaxbox"></div>
+                    </div>
+                  </div>
+            </td>
         </tr>
-        
         <tr><td colspan="2" class="blank_row"></td></tr>
-        <tr><td colspan="2" class="blank_row"></td></tr>
-
-        <!--Payroll Tax
-        -----------------------------------------------------------------------------------
-        -----------------------------------------------------------------------------------
-        -->
+        <!--Payroll Tax-->
         <tr>
-            <th colspan="2" id="payrolltaxhead" class="left"></th>
+            <th colspan="2" id="payrolltaxhead" class="left">Payroll Tax (Social Security + Medicare/aide)</th>
         </tr>
         <tr>
             <td colspan="2">
@@ -203,29 +227,54 @@
                 <div class="dropdown">
                     <span id="payrolltax?"></span>
                     <div class="dropdown-content">
+                        <p id="payrolltaxtext"></p>
                         <div id="payrolltaxbox"></div>
                     </div>
                 </div>
             </td>
         </tr>
         <tr><td colspan="2" class="blank_row"></td></tr>
+        <!--Capital Gains Tax-->
+        <tr>
+            <th colspan="1" id="gainstaxhead" class="left">Capital Gains</th>
+        </tr>
+        <tr>
+            <td colspan="1" id="gainstaxcell">
+                <span id="gainstax"></span>
+                <div class="dropdown">
+                    <span id="gainstax?"></span>
+                    <div class="dropdown-content">
+                        <p id="gainstextbox"></p>
+                        <div id="gainstaxbox"></div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr><td colspan="2" id="gainstaxcell2" class="blank_row"></td></tr>
+        <!--Total Tax-->
         <tr><td colspan="2" class="underlinedotted" id="underline" style="display: none;"></td></tr>
-        <tr><td colspan="2" class="blank_row"></td></tr>
-
-        <!--Grand Total Tax
-        -----------------------------------------------------------------------------------
-        -----------------------------------------------------------------------------------
-        -->
-        <tr><th colspan="2" id="totaltaxhead" class="left" ></th></tr>
-        <tr><td colspan="2" id="totaltax" style="color:rgb(105, 21, 21)"></td></tr>
-        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr><td colspan="2" class="narrowblank_row"></td></tr>
+        <tr><th colspan="2" id="totaltaxhead" class="left" >Total Tax</th></tr>
+        <tr><td colspan="2" > 
+            <span id="totaltax"></span>
+            <div class="dropdown">
+                <span id="totaltax?"></span>
+                <div class="dropdown-content">
+                    <p id="totaltaxtext"></p>
+                    <div id="totaltaxbox"></div>
+                </div>
+            </div>
+        </td></tr>
         <tr><td colspan="2" class="underlinedouble" id="underline2" style="display: none;"></td></tr>
-        <tr><td colspan="2" class="blank_row"></td></tr>
-        <tr><th colspan="2" id="netincomehead" class="left"></th></tr>
+        <!--TOTAL TAKE-HOME PAY-->
+        <tr><th colspan="2" id="netincomehead" class="left" style="background-color:rgb(247, 155, 122);">Total Take-Home Pay</th></tr>
+        <tr><td colspan="2" class="narrowblank_row"></td></tr>
         <tr><td colspan="2" id="netincome" ></td></tr>
-        <tr><td colspan="2" class="blank_row"></td></tr>
+        <tr><td colspan="2" id="plusretirement" ></td></tr>
     </table>
     </div>
+    <BR><BR><BR><BR>
     <p>Last Updated 9/8 11:43AM</p>
+    
 </body>
 </html>

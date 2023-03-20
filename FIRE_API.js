@@ -55,7 +55,59 @@ function loadDef(flag) {
 
 }
 
+function CalcSaved(value,source) {
+    var tempval,tempval2;
+    if (value==null) { document.getElementById("savedtotal").value=null;}
+    if (source==2) { //Inputting Spending
+        tempval=parseFloat(document.getElementById("netincomeinput").value);  //income
+        tempval2=parseFloat(document.getElementById("retirementincome").value)  //retirement
+        if (tempval>0){ document.getElementById("savedtotal").value = ((tempval + tempval2) -value).toFixed(2); }
+    }
+    else if (source==1) { //Inputting Income
+        tempval=parseFloat(document.getElementById("spending").value);  //spending
+        tempval2=parseFloat(document.getElementById("retirementincome").value)  //retirement
+        if (tempval>0) { document.getElementById("savedtotal").value= ((value + tempval2) -tempval).toFixed(2); }
+    }
+    else if (source==3) { //Inputting Retirement
+        tempval=parseFloat(document.getElementById("spending").value);  //spending
+        tempval2=parseFloat(document.getElementById("netincomeinput").value)  //income
+        if (tempval>0) { document.getElementById("savedtotal").value= ((tempval2 + parseFloat(value)) -tempval).toFixed(2); }
+    } else if (source="") {
+        tempval=parseFloat(document.getElementById("spending").value);  //spending
+        tempval2=parseFloat(document.getElementById("netincomeinput").value)  //income
+        if (tempval>0 && tempval2>0) { 
+            document.getElementById("savedtotal").value=((tempval2 + parseFloat(document.getElementById("retirementincome").value)) -tempval).toFixed(2); 
+        }
+    }
+}
 
+function CalcGoal(value,source) {
+    //source=1 is Current Annual Spending
+    if (value!=0) {
+        if (!(document.getElementById("Goal").value>0)) {
+            document.getElementById("Goal").value=value*25;
+        }
+        if (!(document.getElementById("spendingretire").value>0) && source==1) {
+            document.getElementById("spendingretire").value=value;
+        }
+    }
+    
+}
+
+function copyfield(value,destination) {
+    if (value>0) {
+        document.getElementById(destination).value=value;
+    }
+}
+
+//
+
+
+function getNonZeroRandomNumber(){
+    var random = Math.floor(Math.random()*3999) - 2000;
+    if(random==0) return 1;
+    return random/100;
+}
 
 //----------------------------------------------------------------------------------
 // ---------------------------------------fireMain ---------------------------------

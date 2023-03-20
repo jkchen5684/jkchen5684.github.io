@@ -15,16 +15,13 @@ function loadcode() {
 //
 //FILING STATUS
 function singleormarried(value) {
+    document.getElementById("bottomTable").style="visibility:hidden"
     if (value == "married") {
-       //document.getElementById("income1").style = "display:table-cell; padding:3px;";
-        //document.getElementById("income1i").style = "display:table-cell;text-align:right;";
         document.getElementById("income2").style = "display:table-cell; padding:3px;";
         document.getElementById("income2i").style = "display:table-cell;text-align:right;";
         document.getElementById("req2").style="display:table-cell; padding:3px"
         
     } else {
-        //document.getElementById("income1").style = "display:display:table-cell; padding:3px;";
-        //document.getElementById("income1i").style = "display:table-cell;text-align:right;";
         document.getElementById("income2").style = "display:none";
         document.getElementById("income2i").style = "display:none";
         document.getElementById("income2input").value="";
@@ -66,11 +63,9 @@ function sumwages() {
     var wagetot=parseFloat(document.getElementById("incomePre").value)
     //Show/Hide Gross Wages
     if(wagetot>-1){
-        console.log(document.getElementById("incomePre").value)
         document.getElementById("grossWageBox").style="visibility: visible;text-align:right;";
         document.getElementById("grossWageLabel").style="visibility: visible; padding:6px";
     } else {
-        console.log(document.getElementById("incomePre").value)
         document.getElementById("grossWageBox").style="visibility: hidden;text-align:right;";
         document.getElementById("grossWageLabel").style="visibility: hidden";
     }
@@ -89,13 +84,17 @@ function sumwages() {
 //
 //CALCULATE INCOME
 function CalcIncome() {
-    var modifiedincome,totaltax=0,statetotaltax=0,tax=0,grandtotaltax=0;
-    var income=parseFloat(document.getElementById("incomePre").value)
+    var modifiedincome,fedtax=0,payrolltax=0,statetotaltax=0,captaxLT=0;captaxST=0;tax=0,grandtotaltax=0;
+    var wages=parseFloat(document.getElementById("incomePre").value)
     var individualincome;
     var filingstatus=document.getElementById("filingstatus").value;
-    var retirement=parseFloat(document.getElementById("ira").value);  if (!retirement) retirement=0;
     var ltaxrates=[],lbrackets=[],state,rate,val,temp,errflag,display,i,rates;
     var taxyear=document.getElementById("Taxyear").value;
+    var retirement=parseFloat(document.getElementById("ira").value);  if (!retirement) retirement=0;
+    var dividends=parseFloat(document.getElementById("dividends").value);  if(!dividends) dividends=0;
+    var gainsLT=parseFloat(document.getElementById("gainsLT").value);  if(!gainsLT) gainsLT=0;
+    var gainsST=parseFloat(document.getElementById("gainsST").value);  if(!gainsST) gainsST=0;
+    var totalincome=wages+dividends+gainsLT+gainsST;
     if(taxyear===null) { taxyear="2023" }
     const dollar = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -142,13 +141,31 @@ function CalcIncome() {
         }
         
     }
+    let capbrackets = {
+        singlebrackets2022:[0,41675,459750],  //use data
+        marriedbrackets2022:[0,83350,517200],  //use data
+        singlebrackets2023:[0,44625,492300],  //use data
+        marriedbrackets2023:[0,89250,553850],  //use data
+        taxrates:[0,0,.15,.2],
+        data : function(mode) {
+            if (mode=="single") {
+                if(taxyear==="2022") {return this.singlebrackets2022;}
+                if(taxyear==="2023") {return this.singlebrackets2023;}
+            }
+            else {
+                if(taxyear==="2022") {return this.marriedbrackets2022;}
+                if(taxyear==="2023") {return this.marriedbrackets2023;}
+                
+            }
+        },
+    };
     document.getElementById("taxerror").innerHTML=null;
     //
     //ERROR CHECKS
-    if (!(income>0)){
+    if (!(wages>0)||isNaN(wages)){
         errflag=1;
         loadDef(2);
-        document.getElementById("taxerror").innerHTML="Please Input a Gross Income to Calculate Taxes";
+        document.getElementById("taxerror").innerHTML="Please Input an Gross Income to Calculate Taxes";
         document.getElementById("incomePre").value=""
     } else if(filingstatus=="single" && retirement>22500) {
         errflag=1;
@@ -162,44 +179,76 @@ function CalcIncome() {
     if(filingstatus=="married" && (!document.getElementById("income1input").value || !document.getElementById("income2input").value)) {
         errflag=1;
         loadDef(2);
-        document.getElementById("taxerror").innerHTML="Please enter an income for both income earners, if only one person has an income, input a 0 for the other.";
+        document.getElementById("taxerror").innerHTML="Please enter an income for both income earners, if only one person has an income, input a 0 for the other.";   
+    }
+    if (errflag)
+    {
+        document.getElementById("taxerror").style="color:red; display:block;"
+        document.getElementById("bottomTable").style="visibility:hidden"
     }
 
-
-
+e:
 
     //BEGIN------------------------------------------------------------------------------
     if (!errflag)
     {
+        document.getElementById("taxerror").style="color:red; display:none;"
+        var fedincome=wages+dividends+gainsST;
         //0.  SET the Top Elements:  Adjusted Gross Income (AGI): [Amount]
         //                           Federal Income Tax | State Income Tax
         //
         //                           Payroll Tax (Social Security + Medicare/aide)
-        document.getElementById("bottomTable").style="background-color:bisque; border:2px solid; padding:10px"
+        document.getElementById("bottomTable").style="background-color:bisque; border:2px solid; padding:10px; visibility:visible"
         document.getElementById("underline").style.display="";
         document.getElementById("underline2").style.display="";
+        document.getElementById("underline3").style.display="";
         state=document.getElementById("state").value;
-        document.getElementById("taxhead1").innerHTML="State Income Tax - "+state;
+        document.getElementById("taxhead1").innerHTML="Federal Income Tax";
+        document.getElementById("taxhead2").innerHTML="State Income Tax - "+state;
         document.getElementById("payrolltaxhead").innerHTML="Payroll Tax (Social Security + Medicare/aide)";
-        document.getElementById("taxhead2").innerHTML="Federal Income Tax";
-
+        //Only show cap gains box if there's cap gains.
+        if (gainsLT>0) {
+            document.getElementById("gainstaxhead").innerHTML="LT Capital Gains Tax";
+            document.getElementById("gainstaxhead").style="display:block";
+            document.getElementById("gainstaxcell").style="display:block";
+            document.getElementById("gainstaxcell2").style="display:block";
+        } else {
+            document.getElementById("gainstaxhead").innerHTML="";
+            document.getElementById("gainstaxhead").style="display:none"; 
+            document.getElementById("gainstaxcell").style="display:none";
+            document.getElementById("gainstaxcell2").style="display:none";
+        }
         //1.  Gross Income & Adjusted
         //
-        modifiedincome=Math.max(income-brackets.deduction(filingstatus)-retirement,0);  //AGI
-        document.getElementById("gross income").innerHTML="Gross Income: "+dollar.format(income)
-        document.getElementById("agi").innerHTML="Adjusted Gross Income (AGI): "+dollar.format(modifiedincome)
-        document.getElementById("agi?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
-        document.getElementById("agitext").innerHTML="Adjusted Gross Income is what we actually compute your taxes off of after deducting the below from your income.  It starts with your Gross Income of "+dollar.format(income)+" and reduces it by the amounts listed in the table below."
         var taxtable = new Array();
+        modifiedincome=Math.max(fedincome-brackets.deduction(filingstatus)-retirement,0);  //AGI
+        document.getElementById("gross income").innerHTML="<B>Total Income:</B> "+dollar.format(totalincome);
+        document.getElementById("gross?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
+        //Build Total Income Popup
+        document.getElementById("grosstext").innerHTML="Below is a breakdown of all your income.  Not all income are taxed the same."
+        taxtable.push(["Tax Source","Amount"])
+        taxtable.push(["Wages",wages]);
+        if(dividends>0) taxtable.push(["Dividends",dividends]);
+        if(gainsLT>0) taxtable.push(["Long-term Capital Gains",gainsLT]);
+        if(gainsST>0) taxtable.push(["Short-term Capital Gains",gainsST]);
+        makeTable(taxtable,['400px','200px'],'grossbox',"","","0","","1");
+        //Build AGI Income Popup
+        document.getElementById("agi").innerHTML="<B>Adjusted Gross Income (AGI):</B> "+dollar.format(modifiedincome)
+        document.getElementById("agi?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
+        document.getElementById("agitext").innerHTML="AGI starts with your Gross Income of <B>"+dollar.format(fedincome)+"</B> (Wages: "+dollar.format(wages)
+        if(dividends>0) document.getElementById("agitext").insertAdjacentHTML("beforeend"," + Interest & Dividends: "+dollar.format(dividends));
+        if(gainsST>0) document.getElementById("agitext").insertAdjacentHTML("beforeend"," + Short-term Cap Gains: "+dollar.format(gainsST));
+        document.getElementById("agitext").insertAdjacentHTML("beforeend",") and reduces it by the amounts listed in the table below.");
+        taxtable=[];
         taxtable.push(["Deduction","Income Reduction"]);  //Set Row Headers
-        taxtable.push(["Standard deduction for "+filingstatus+" filers.",dollar.format(brackets.deduction(filingstatus))]);
-        taxtable.push(["Retirement Deduction (401k/IRA/403B)",dollar.format(retirement)]);
-        makeTable(taxtable,['400px','200px'],'agibox',"","","0");
+        taxtable.push(["Standard deduction for "+filingstatus+" filers.",brackets.deduction(filingstatus)]);
+        taxtable.push(["Retirement Deduction (401k/IRA/403B)",retirement]);
+        makeTable(taxtable,['400px','200px'],'agibox',"","","0","","1");
 
         //2.  Popup for State Income Tax
         //
         taxtable = [];
-        document.getElementById("stateagi").innerHTML="Computed off AGI: "+dollar.format(modifiedincome);
+        document.getElementById("stateagi").innerHTML="Taxed off your AGI: "+dollar.format(modifiedincome);
         document.getElementById("stateagi").style.fontSize="14px";
         taxtable.push(["Income Bracket","Your Tax"]);  //Set Row Headers
         ltaxrates=statebrackets.taxrates(state,filingstatus);  //Grab Taxrates for state
@@ -223,10 +272,10 @@ function CalcIncome() {
                     temp="&nbsp&nbsp • ["+dollar.format(lbrackets[i-1])+" - "+val+"] - Taxed @ "+rate+"%";
                 }
                 statetotaltax=statetotaltax+tax;
-                taxtable.push([temp,dollar.format(tax)]);
+                taxtable.push([temp,tax]);
             }
         }
-        makeTable(taxtable,['400px','200px'],'statetaxbox',"","","0");
+        makeTable(taxtable,['400px','200px'],'statetaxbox',"","","0","small","1");
         grandtotaltax=grandtotaltax+statetotaltax;
         document.getElementById("statetax").innerHTML=dollar.format(statetotaltax);
         document.getElementById("statetax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
@@ -235,7 +284,7 @@ function CalcIncome() {
         
         //3.  Popup for Federal Income Tax
         //
-        document.getElementById("fedagi").innerHTML="Federal AGI: "+dollar.format(modifiedincome);
+        document.getElementById("fedagi").innerHTML="Taxed off your AGI: "+dollar.format(modifiedincome);
         document.getElementById("fedagi").style.fontSize="14px";
         taxtable=[];  //clear the array
         lbrackets=brackets.data(filingstatus);
@@ -250,85 +299,157 @@ function CalcIncome() {
             //calculate tax in each bracket
             tax=Math.min(Math.max(modifiedincome-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*brackets.taxrates[i+1];
             //keep track of the total tax
-            totaltax=totaltax+tax;
+            fedtax=fedtax+tax;
             //show the tax bracket amount
             val=("&nbsp&nbsp • "+("["+dollar.format(lbrackets[i])+" "+display+"] - Taxed @ "+brackets.taxrates[i+1]*100)+"%");
-            taxtable.push([val,dollar.format(tax)]);
+            taxtable.push([val,tax]);
         }
-        grandtotaltax=grandtotaltax+totaltax;
-        document.getElementById("fedtax").innerHTML=dollar.format(totaltax)
+        grandtotaltax=grandtotaltax+fedtax;
+        document.getElementById("fedtax").innerHTML=dollar.format(fedtax)
         document.getElementById("fedtax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
         document.getElementById("fedtax").style.fontWeight="";
         document.getElementById("fedtax").style.textJustify="";
-        makeTable(taxtable,['400px','200px'],'fedtaxbox',"","","0");
+        makeTable(taxtable,['400px','200px'],'fedtaxbox',"","","0","small","1");
         
-
+        //5.  Capital Gains Tax
+        document.getElementById("gainstextbox").innerHTML="Your long term capital gains of <B>"+dollar.format(gainsLT)+"</B> will be taxed on top of your Adjusted Gross Income (AGI) of <B> "+dollar.format(modifiedincome)+".</B>  In other words, your Cap Gains tax bracket is effectively ["+dollar.format(modifiedincome)+" - "+dollar.format(modifiedincome+gainsLT)+"]."
+        document.getElementById("gainstextbox").style.fontSize="14px";
+        taxtable=[];  //clear the array
+        lbrackets=capbrackets.data(filingstatus);
+        taxtable.push(["Income Bracket","Your Tax"]);
+        for (i=0;i<3;i++) {
+            display="- "+dollar.format(lbrackets[i+1]);
+            if (!lbrackets[i+1]) {
+                lbrackets[i+1]=999999999999;
+                display="and up"
+            }
+            //calculate tax in each bracket
+            //tax=Math.min(Math.max(modifiedincome-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
+            tax=Math.min(Math.max(modifiedincome+gainsLT-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
+            tax=tax - Math.min(Math.max(modifiedincome-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
+            //keep track of the total tax
+            captaxLT=captaxLT+tax;
+            //show the tax bracket amount
+            val=("&nbsp&nbsp • "+("["+dollar.format(lbrackets[i])+" "+display+"] - Taxed @ "+capbrackets.taxrates[i+1]*100)+"%");
+            taxtable.push([val,tax]);
+        }
+        grandtotaltax=grandtotaltax+captaxLT;
+        document.getElementById("gainstax").innerHTML=dollar.format(captaxLT)
+        document.getElementById("gainstax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
+        document.getElementById("gainstax").style.fontWeight="";
+        document.getElementById("gainstax").style.textJustify="";
+        makeTable(taxtable,['400px','200px'],'gainstaxbox',"","","0","small","1");
+        
         //4.  Payroll Tax
         //
         taxtable=[];
-        totaltax=0;
+        payrolltax=0;
+        var payrollincome=wages
+        document.getElementById("payrolltaxtext").innerHTML="Payroll (FICA) Tax is computed off your full wages only: <B>"+dollar.format(payrollincome)+"</B>.  "
+        if(retirement>0) document.getElementById("payrolltaxtext").insertAdjacentHTML("beforeend","Note, your "+dollar.format(retirement)+" retirement contribution still gets taxed for Social Security and Medicare.");
         taxtable.push(["Tax Type","Your Tax"]);
         if (filingstatus=="single") {
-            tax=Math.min(income,147000)*.062;
-            totaltax=tax;
-            tax=dollar.format(tax);
-            if(tax==="$9,114") {taxtable.push(["• <B>Social Security</B> (6.2% of the $147,000 income cap)",tax])}
-            else {taxtable.push(["• <B>Social Security</B> (6.2% of "+dollar.format(income)+" of income)",tax])}
-            tax=income*.0145;
-            if(income<200000) {
-                taxtable.push(["• <B>Medicare</B> (1.45% of "+dollar.format(income)+" of income)",dollar.format(tax)]);
-                totaltax=totaltax+tax;
+            tax=Math.min(payrollincome,147000)*.062;
+            payrolltax=tax;
+            //tax=dollar.format(tax);
+            console.log(tax)
+            if(tax===9114) {taxtable.push(["• <B>Social Security</B> (6.2% of the $147,000 income cap)",tax])}
+            else {taxtable.push(["• <B>Social Security</B> (6.2% of "+dollar.format(payrollincome)+" of income)",tax])}
+            tax=payrollincome*.0145;
+            if(payrollincome<200000) {
+                taxtable.push(["• <B>Medicare</B> (1.45% of "+dollar.format(payrollincome)+" of income)",tax]);
+                payrolltax=payrolltax+tax;
             }
             else {
-                taxtable.push(["• <B>Medicare</B> (1.45% of "+dollar.format(income)+" of income)",dollar.format(tax)]);
-                totaltax=totaltax+tax;
-                tax=income*.009;
-                taxtable.push(["• <B>Additional Medicare</B> (0.9% of "+dollar.format(income)+" of income)",dollar.format(tax)]);
-                totaltax=totaltax+tax;
+                taxtable.push(["• <B>Medicare</B> (1.45% of "+dollar.format(payrollincome)+" of income)",tax]);
+                payrolltax=payrolltax+tax;
+                tax=payrollincome*.009;
+                taxtable.push(["• <B>Additional Medicare</B> (0.9% of "+dollar.format(payrollincome)+" of income)",tax]);
+                payrolltax=payrolltax+tax;
             }
-            
         } 
         else {
             for (i=1;i<3;i++) {
                 individualincome=parseFloat(document.getElementById("income"+i+"input").value)
-                if (income>0) { tax=Math.min(individualincome,147000)*0.062; totaltax=totaltax+tax; tax=dollar.format(tax); } else { tax="Error, Please enter an income for Person "+i; }
+                if (payrollincome>0) { tax=Math.min(individualincome,147000)*0.062; totaltax=totaltax+tax; } else { tax="Error, Please enter an income for Person "+i; }
                 //taxtable.push(["• Social Security for Person "+i,tax]);
-                if(tax==="$9,114") {taxtable.push(["• Person "+i+" <B>Social Security</B> (6.2% of the $147,000 income cap)",tax])}
+                if(tax===9114) {taxtable.push(["• Person "+i+" <B>Social Security</B> (6.2% of the $147,000 income cap)",tax])}
                 else {taxtable.push(["• Person "+i+" <B>Social Security</B> (6.2% of "+dollar.format(individualincome)+" of income)",tax])}
             }
-            tax=individualincome*.0145;
-            tax=tax+(Math.max(individualincome-250000,0)*.009);
-            taxtable.push(["Medicare (1.45%, + 0.9% on income over $250,000)",dollar.format(tax)]);
-            totaltax=totaltax+tax;
+            tax=payrollincome*.0145;
+            
+            if(payrollincome<200000) {
+                taxtable.push(["• <B>Medicare</B> (1.45% of "+dollar.format(payrollincome)+" of income)",tax]);
+                payrolltax=payrolltax+tax;
+            }
+            else {
+                taxtable.push(["• <B>Medicare</B> (1.45% of "+dollar.format(payrollincome)+" of income)",tax]);
+                payrolltax=payrolltax+tax;
+                tax=payrollincome*.009;
+                taxtable.push(["• <B>Additional Medicare</B> (0.9% of "+dollar.format(payrollincome)+" of income)",tax]);
+                payrolltax=payrolltax+tax;
+            }
+            
         }
         //final save
-        grandtotaltax=grandtotaltax+totaltax;
-        document.getElementById("payrolltax").innerHTML=dollar.format(totaltax)
+        grandtotaltax=grandtotaltax+payrolltax;
+        document.getElementById("payrolltax").innerHTML=dollar.format(payrolltax)
         document.getElementById("payrolltax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
-        makeTable(taxtable,['400px','200px'],'payrolltaxbox',"","","0","small");
+        makeTable(taxtable,['400px','200px'],'payrolltaxbox',"","","0","small","1");
 
 
-        //5.  Grand Total Tax & Final Income
-        document.getElementById("totaltaxhead").innerHTML="Total Tax"
-        document.getElementById("totaltaxhead").style.fontSize="20px";
+        //6.  Grand Total Tax & Final Income
+        document.getElementById("totaltaxhead").style.fontSize="18px";
         document.getElementById("totaltax").innerHTML=dollar.format(grandtotaltax);
-        document.getElementById("totaltax").style.fontSize="20px";
-        document.getElementById("netincomehead").innerHTML="Total Net Income"
+        document.getElementById("totaltax").style="font-size:20px; text-indent:0px; color:rgb(105, 21, 21); font-weight:bold;"
+        document.getElementById("totaltax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
+        //7.  Total Tax Box
+        document.getElementById("totaltaxtext").innerHTML="This is your total tax liability"
+        taxtable= [];
+        taxtable.push(["Tax Type","Your Tax"]);
+        taxtable.push(["Federal Income Tax",fedtax])
+        taxtable.push(["State Income Tax",statetotaltax])
+        taxtable.push(["Payroll Tax",payrolltax])
+        makeTable(taxtable,['400px','200px'],'totaltaxbox',"","","0","medium","1");
+        //
         document.getElementById("netincomehead").style.fontSize="20px";
-        console.log("income: "+parseFloat(document.getElementById("incomePre").value));
-        console.log("grandtotaltax: "+grandtotaltax);
-        document.getElementById("netincome").innerHTML=dollar.format(parseFloat(document.getElementById("incomePre").value)-grandtotaltax);
-        document.getElementById("netincome").style.fontSize="20px";
-        //document.getElementById("netincomeinput").value=(income-grandtotaltax).toFixed(2);
-        //val=document.getElementById("spending").value;
-        //if (val>0) {
-        //    document.getElementById("savedtotal").value=((income-grandtotaltax).toFixed(2)-val).toFixed(2);
-        //}
+        document.getElementById("netincome").innerHTML=dollar.format(parseFloat(document.getElementById("incomePre").value)-grandtotaltax-retirement);
+        document.getElementById("netincome").style="font-size:20px; text-indent:0px; color:rgb(7, 117, 51); font-weight:bold;";
+        if(retirement>0) {
+            document.getElementById("plusretirement").innerHTML="+ "+dollar.format(retirement)+" retirement.";
+            document.getElementById("plusretirement").style="font-size:20px; text-indent:5px; color:rgb(34, 122, 93);";
+        }
+        else {
+            document.getElementById("plusretirement").style="display:none;";
+        }
 
     }
 }
 
+function Cleareverything()
+{
+    document.getElementById("bottomTable").style="visibility:hidden"
+    document.getElementById("income1input").value=""
+    document.getElementById("income2input").value=""
+    document.getElementById("incomePre").value=""
+    document.getElementById("req1dets").className="fa fa-dot-circle-o";
+    document.getElementById("req1dets").style="color:Red";
+    document.getElementById("req2dets").className="fa fa-dot-circle-o";
+    document.getElementById("req2dets").style="color:Red";
+    document.getElementById("ira").value="";
+    document.getElementById("dividends").value="";
+    document.getElementById("gainsLT").value="";
+}
 
+function Defaultstuff()
+{
+    document.getElementById("income1input").value="100000";
+    sumwages();
+    document.getElementById("ira").value="15000";
+    document.getElementById("dividends").value="10000";
+    document.getElementById("gainsLT").value="13000";
+    document.getElementById("gainsST").value="5000";
+}
 
 
 
@@ -341,60 +462,7 @@ function getUSDPrice(obj) {
 //
 
 
-function CalcSaved(value,source) {
-    var tempval,tempval2;
-    if (value==null) { document.getElementById("savedtotal").value=null;}
-    if (source==2) { //Inputting Spending
-        tempval=parseFloat(document.getElementById("netincomeinput").value);  //income
-        tempval2=parseFloat(document.getElementById("retirementincome").value)  //retirement
-        if (tempval>0){ document.getElementById("savedtotal").value = ((tempval + tempval2) -value).toFixed(2); }
-    }
-    else if (source==1) { //Inputting Income
-        tempval=parseFloat(document.getElementById("spending").value);  //spending
-        tempval2=parseFloat(document.getElementById("retirementincome").value)  //retirement
-        if (tempval>0) { document.getElementById("savedtotal").value= ((value + tempval2) -tempval).toFixed(2); }
-    }
-    else if (source==3) { //Inputting Retirement
-        tempval=parseFloat(document.getElementById("spending").value);  //spending
-        tempval2=parseFloat(document.getElementById("netincomeinput").value)  //income
-        if (tempval>0) { document.getElementById("savedtotal").value= ((tempval2 + parseFloat(value)) -tempval).toFixed(2); }
-    } else if (source="") {
-        console.log("inside")
-        tempval=parseFloat(document.getElementById("spending").value);  //spending
-        tempval2=parseFloat(document.getElementById("netincomeinput").value)  //income
-        if (tempval>0 && tempval2>0) { 
-            document.getElementById("savedtotal").value=((tempval2 + parseFloat(document.getElementById("retirementincome").value)) -tempval).toFixed(2); 
-        }
-    }
-}
 
-function CalcGoal(value,source) {
-    //source=1 is Current Annual Spending
-    if (value!=0) {
-        if (!(document.getElementById("Goal").value>0)) {
-            document.getElementById("Goal").value=value*25;
-        }
-        if (!(document.getElementById("spendingretire").value>0) && source==1) {
-            document.getElementById("spendingretire").value=value;
-        }
-    }
-    
-}
-
-function copyfield(value,destination) {
-    if (value>0) {
-        document.getElementById(destination).value=value;
-    }
-}
-
-//
-
-
-function getNonZeroRandomNumber(){
-    var random = Math.floor(Math.random()*3999) - 2000;
-    if(random==0) return 1;
-    return random/100;
-}
 
 function getstatebrackets(state,filingstatus,taxyear)
 {
@@ -563,8 +631,13 @@ function getstatetaxrates(state,filingstatus,taxyear)
 //              element (I,REQ) - the name of the data element we're gonna store the table
 //              boldcolumn (I,OPT) - the Column number we're going to check for a data value
 //              boldvalue (I,OPT) - the Value in the "boldcolumn" we're going to bold the row for if found.
-function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border,fontsize){
-    var i,j,val,str;
+function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border,fontsize,finalSUMflag){
+    var i,j,val,str,total=0,currencyrow;
+    const dollar = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
+    });
     //Create a HTML Table element.
     var table = document.createElement("TABLE");
     if (border!=null) {
@@ -591,9 +664,17 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border,fontsize
         row = table.insertRow(-1);
         for (var j = 0; j < columnCount; j++) {
             var cell = row.insertCell(-1);
-            
             val = dataary[i][j];
-            cell.innerHTML = val;
+            //convert all numbers to dollars
+            if (isNaN(val)) {
+                cell.innerHTML = val;
+            }
+            else {
+                if(finalSUMflag) {total=total+val,currencyrow=j;}
+                cell.innerHTML=dollar.format(val)
+                
+            }
+
             if (fontsize!==null) {cell.style.fontSize=fontsize}
 
             //Make Negatives Red
@@ -627,6 +708,18 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border,fontsize
                     cell.style.fontSize="12px"
                 }
             }
+        }
+    }
+    
+    //Final Sum
+    if (finalSUMflag) {
+        row = table.insertRow(-1);
+        row.style = "border-top: 5px double;font-weight:bold"
+        for (var j = 0; j < columnCount; j++) {
+            var cell = row.insertCell(-1);
+            console.log(currencyrow)
+            if(j==currencyrow) {cell.innerHTML = dollar.format(total);}
+            else {cell.innerHTML="Total"}
         }
     }
     var dvTable = document.getElementById(element);
