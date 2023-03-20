@@ -311,35 +311,6 @@ e:
         document.getElementById("fedtax").style.textJustify="";
         makeTable(taxtable,['400px','200px'],'fedtaxbox',"","","0","small","1");
         
-        //5.  Capital Gains Tax
-        document.getElementById("gainstextbox").innerHTML="Your long term capital gains of <B>"+dollar.format(gainsLT)+"</B> will be taxed on top of your Adjusted Gross Income (AGI) of <B> "+dollar.format(modifiedincome)+".</B>  In other words, your Cap Gains tax bracket is effectively ["+dollar.format(modifiedincome)+" - "+dollar.format(modifiedincome+gainsLT)+"]."
-        document.getElementById("gainstextbox").style.fontSize="14px";
-        taxtable=[];  //clear the array
-        lbrackets=capbrackets.data(filingstatus);
-        taxtable.push(["Income Bracket","Your Tax"]);
-        for (i=0;i<3;i++) {
-            display="- "+dollar.format(lbrackets[i+1]);
-            if (!lbrackets[i+1]) {
-                lbrackets[i+1]=999999999999;
-                display="and up"
-            }
-            //calculate tax in each bracket
-            //tax=Math.min(Math.max(modifiedincome-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
-            tax=Math.min(Math.max(modifiedincome+gainsLT-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
-            tax=tax - Math.min(Math.max(modifiedincome-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
-            //keep track of the total tax
-            captaxLT=captaxLT+tax;
-            //show the tax bracket amount
-            val=("&nbsp&nbsp • "+("["+dollar.format(lbrackets[i])+" "+display+"] - Taxed @ "+capbrackets.taxrates[i+1]*100)+"%");
-            taxtable.push([val,tax]);
-        }
-        grandtotaltax=grandtotaltax+captaxLT;
-        document.getElementById("gainstax").innerHTML=dollar.format(captaxLT)
-        document.getElementById("gainstax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
-        document.getElementById("gainstax").style.fontWeight="";
-        document.getElementById("gainstax").style.textJustify="";
-        makeTable(taxtable,['400px','200px'],'gainstaxbox',"","","0","small","1");
-        
         //4.  Payroll Tax
         //
         taxtable=[];
@@ -397,6 +368,34 @@ e:
         document.getElementById("payrolltax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
         makeTable(taxtable,['400px','200px'],'payrolltaxbox',"","","0","small","1");
 
+         //5.  Capital Gains Tax
+         document.getElementById("gainstextbox").innerHTML="Your long term capital gains of <B>"+dollar.format(gainsLT)+"</B> will be taxed on top of your Adjusted Gross Income (AGI) of <B> "+dollar.format(modifiedincome)+".</B>  In other words, your Cap Gains tax bracket is effectively ["+dollar.format(modifiedincome)+" - "+dollar.format(modifiedincome+gainsLT)+"]."
+         document.getElementById("gainstextbox").style.fontSize="14px";
+         taxtable=[];  //clear the array
+         lbrackets=capbrackets.data(filingstatus);
+         taxtable.push(["Income Bracket","Your Tax"]);
+         for (i=0;i<3;i++) {
+             display="- "+dollar.format(lbrackets[i+1]);
+             if (!lbrackets[i+1]) {
+                 lbrackets[i+1]=999999999999;
+                 display="and up"
+             }
+             //calculate tax in each bracket
+             //tax=Math.min(Math.max(modifiedincome-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
+             tax=Math.min(Math.max(modifiedincome+gainsLT-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
+             tax=tax - Math.min(Math.max(modifiedincome-lbrackets[i],0),lbrackets[i+1]-lbrackets[i])*capbrackets.taxrates[i+1];
+             //keep track of the total tax
+             captaxLT=captaxLT+tax;
+             //show the tax bracket amount
+             val=("&nbsp&nbsp • "+("["+dollar.format(lbrackets[i])+" "+display+"] - Taxed @ "+capbrackets.taxrates[i+1]*100)+"%");
+             taxtable.push([val,tax]);
+         }
+         grandtotaltax=grandtotaltax+captaxLT;
+         document.getElementById("gainstax").innerHTML=dollar.format(captaxLT)
+         document.getElementById("gainstax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
+         document.getElementById("gainstax").style.fontWeight="";
+         document.getElementById("gainstax").style.textJustify="";
+         makeTable(taxtable,['400px','200px'],'gainstaxbox',"","","0","small","1");
 
         //6.  Grand Total Tax & Final Income
         document.getElementById("totaltaxhead").style.fontSize="18px";
@@ -410,19 +409,27 @@ e:
         taxtable.push(["Federal Income Tax",fedtax])
         taxtable.push(["State Income Tax",statetotaltax])
         taxtable.push(["Payroll Tax",payrolltax])
+        if(captaxLT>0) {taxtable.push(["Long Term Capital Gains Tax",captaxLT])}
         makeTable(taxtable,['400px','200px'],'totaltaxbox',"","","0","medium","1");
         //
         document.getElementById("netincomehead").style.fontSize="20px";
-        document.getElementById("netincome").innerHTML=dollar.format(parseFloat(document.getElementById("incomePre").value)-grandtotaltax-retirement);
+        document.getElementById("netincome").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax-retirement));
         document.getElementById("netincome").style="font-size:20px; text-indent:0px; color:rgb(7, 117, 51); font-weight:bold;";
+        document.getElementById("netincome?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
+        document.getElementById("netincometext").innerHTML="This is your total Pay"
+        taxtable= [];
+        taxtable.push(["Value","Amount"]);
+        taxtable.push(["Total Income",totalincome])
+        taxtable.push(["All Taxes",-grandtotaltax])        
         if(retirement>0) {
             document.getElementById("plusretirement").innerHTML="+ "+dollar.format(retirement)+" retirement.";
             document.getElementById("plusretirement").style="font-size:20px; text-indent:5px; color:rgb(34, 122, 93);";
+            taxtable.push(["Retirement",-retirement])
         }
         else {
             document.getElementById("plusretirement").style="display:none;";
         }
-
+        makeTable(taxtable,['400px','200px'],'netincomebox',"","","0","medium","1");
     }
 }
 
