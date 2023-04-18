@@ -322,7 +322,6 @@ e:
         if (filingstatus=="single") {
             tax=Math.min(payrollincome,147000)*.062;
             payrolltax=tax;
-            //tax=dollar.format(tax);
             console.log(tax)
             if(tax===9114) {taxtable.push(["• <B>Social Security</B> (6.2% of the $147,000 income cap)",tax])}
             else {taxtable.push(["• <B>Social Security</B> (6.2% of "+dollar.format(payrollincome)+" of income)",tax])}
@@ -346,6 +345,7 @@ e:
                 //taxtable.push(["• Social Security for Person "+i,tax]);
                 if(tax===9114) {taxtable.push(["• Person "+i+" <B>Social Security</B> (6.2% of the $147,000 income cap)",tax])}
                 else {taxtable.push(["• Person "+i+" <B>Social Security</B> (6.2% of "+dollar.format(individualincome)+" of income)",tax])}
+                payrolltax=payrolltax+tax;
             }
             tax=payrollincome*.0145;
             
