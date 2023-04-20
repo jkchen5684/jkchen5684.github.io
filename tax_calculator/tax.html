@@ -60,24 +60,23 @@
 <br>
 <main role="main" class="container">
 <div class="card">
-<table width="375">
+<table width="350">
 <tr><td>This is a basic income tax estimator, and is meant for informational purposes only</td></tr>
+<tr><td colspan="1"><input type="button" value="Default stuff" onclick="Defaultstuff()"></td></tr>
 </table>
 <!--Tax Year Drowndown-->
 <table width="100">
     <tr><td class="blank_row"></td></tr>
-    <tr><td class="blank_row"></td></tr>
     <tr><td width="50">Tax Year</td>
     <td width="50"><form action="/action_page.php"><select name="Taxyear" id="Taxyear" style="width: 50px; height: 25px"><option value="2022" selected>2022</option><option value="2023">2023</option></select></form></td>
 </tr>
-<tr><td><input type="button" value="Default stuff" onclick="Defaultstuff()"></td></tr></tr>
 </table>
 
-<table width="320" >
+<table width="200" >
 <!--State Where you Live-->
-<tr><td style="padding:3px;">State where you live</td><td>
+<tr><td style="padding:3px; width:150;">State where you live</td><td>
     <form action="/action_page.php">
-        <select name="state" id="state" style="width: 140px; height: 25px">
+        <select name="state" id="state" style="width: 50; height: 25px">
             <option value="Alabama">Alabama</option><option value="Alaska">Alaska</option><option value="Arizona">Arizona</option><option value="Arkansas">Arkansas</option><option value="California">California</option><option value="Colorado">Colorado</option>
             <option value="Connecticut">Connecticut</option><option value="Delaware">Delaware</option><option value="Florida">Florida</option><option value="Georgia">Georgia</option><option value="Hawaii">Hawaii</option><option value="Idaho">Idaho</option>
             <option value="Illinois">Illinois</option><option value="Indiana" selected>Indiana</option><option value="Iowa">Iowa</option><option value="Kansas">Kansas</option><option value="Kentucky">Kentucky</option><option value="Louisiana">Louisiana</option>
@@ -88,12 +87,11 @@
             <option value="Tennessee">Tennessee</option><option value="Texas">Texas</option><option value="Utah">Utah</option><option value="Vermont">Vermont</option><option value="Virginia">Virginia</option><option value="Washington">Washington</option><option value="Washington DC">Washington DC</option>
             <option value="West Virginia">West Virginia</option><option value="Wisconsin">Wisconsin</option><option value="Wyoming">Wyoming</option>
 </select></form></td></tr>
-
 <tr><td colspan="2" class="narrowblank_row"></td></tr>
 </table>
 
-<table width="475" style="border:2px solid; padding:10px">
-    <tr><td width="300"></td><td width="150"></td><td width="25"></td></tr>
+<table width="350" style="border:2px solid; padding:10px">
+    <tr><td width="200"></td><td width="150"></td><td width="25"></td></tr>
     
 
     <!--Income Header-->
