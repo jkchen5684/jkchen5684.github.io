@@ -4,7 +4,6 @@
     --black: #000000;
 }
 
-
 * {
     color: var(--fontColor);
     font-family: Helvetica;
