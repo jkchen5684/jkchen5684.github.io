@@ -64,10 +64,10 @@ function sumwages() {
     //Show/Hide Gross Wages
     if(wagetot>-1){
         document.getElementById("grossWageBox").style="visibility: visible;text-align:right;";
-        document.getElementById("grossWageLabel").style="visibility: visible;";
+        document.getElementById("grossWageLabel").innerHTML="Pre-Tax Gross Wages"
     } else {
         document.getElementById("grossWageBox").style="visibility: hidden;text-align:right;";
-        document.getElementById("grossWageLabel").style="visibility: hidden";
+        document.getElementById("grossWageLabel").innerHTML=""
     }
 
     if (filingstatus=="married") {
