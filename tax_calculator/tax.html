@@ -100,10 +100,10 @@
     <!--Income Header-->
     <tr><th colspan="3" class="left" style="color: darkgreen; padding:3px" >Wages (Income)</th></tr>
     <!--Filing Status-->
-    <tr><td style="padding:3px;">Filing Status</td><td style="text-align:right" colspan="2"><form action="/action_page.php">
+    <tr><td style="padding:3px;">Filing Status</td><td style="text-align:right" colspan="1"><form action="/action_page.php">
                 <select name="filingstatus" id="filingstatus" style="width: 80px; height: 25px" onchange="singleormarried(this.value)">
                     <option value="single">Single</option>
-                    <option value="married">Married</option></select></form></td></tr>
+                    <option value="married">Married</option></select></form></td><td></td></tr>
     <!--Income Inputs-->
     <tr><td style="padding:3px;">.. Income for wage earner 1</td>  
         <td style="text-align:right;">
@@ -129,9 +129,9 @@
     <!--Gross Wages-->
     <tr>
         <td id="grossWageLabel" style="visibility: hidden; padding:2px;">Pre-Tax Gross Wages</td>
-        <td id="grossWageBox" colspan="2" style="text-align:right; visibility:hidden;">
+        <td id="grossWageBox" colspan="1" style="text-align:right; visibility:hidden;">
             <span>$</span>
-            <input type="number" size="50" min="0" max="1000000" step="1000" id="incomePre" value="" style="width: 100px;" class="currency" disabled="disabled"></td></tr>
+            <input type="number" size="50" min="0" max="1000000" step="1000" id="incomePre" value="" style="width: 100px;" class="currency" disabled="disabled"></td><td></td></tr>
     <!--Blank-->
     <!--<tr><td colspan="3" id="income12blank" class="blank_row"></td></tr>-->
     <!--Optional Inputs-->
@@ -139,16 +139,16 @@
     
     <!--Retirement-->
     <tr><td style="padding:3px;">401k/403b/IRA Contributions</td>
-        <td colspan="2" style="text-align:right;"><span>$</span><input type="number" size="50" id="ira" min="0" max="40000" step="1000" value="" style="width: 100px"></td></tr>
+        <td colspan="1" style="text-align:right;"><span>$</span><input type="number" size="50" id="ira" min="0" max="40000" step="1000" value="" style="width: 100px"></td><td></td></tr>
     <!--Interest & Dividends-->
     <tr><td style="padding:3px;">Interest & Dividends</td>
-        <td colspan="2" style="text-align:right;"><span>$</span><input type="number" size="50" id="dividends" min="0" max="40000" step="1000" value="" style="width: 100px"></td></tr>
+        <td colspan="1" style="text-align:right;"><span>$</span><input type="number" size="50" id="dividends" min="0" max="40000" step="1000" value="" style="width: 100px"></td><td></td></tr>
     <!--Capital Gains LT-->
     <tr><td style="padding:3px;">Long Term Capital Gains</td>
-        <td colspan="2" style="text-align:right;"><span>$</span><input type="number" size="50" id="gainsLT" min="0" max="40000" step="1000" value="" style="width: 100px"></td></tr>
+        <td colspan="1" style="text-align:right;"><span>$</span><input type="number" size="50" id="gainsLT" min="0" max="40000" step="1000" value="" style="width: 100px"></td><td></td></tr>
     <!--Capital Gains ST-->
     <tr><td style="padding:3px;">Short Term Capital Gains</td>
-        <td colspan="2" style="text-align:right;"><span>$</span><input type="number" size="50" id="gainsST" min="0" max="40000" step="1000" value="" style="width: 100px"></td></tr>
+        <td colspan="1" style="text-align:right;"><span>$</span><input type="number" size="50" id="gainsST" min="0" max="40000" step="1000" value="" style="width: 100px"></td><td></td></tr>
     <!--Calculate Button-->
     <tr><td colspan="1" style="padding:5px;"><input type="button" value="Calculate my taxes" onclick="CalcIncome()"></td>
     <!--Clear Button-->
