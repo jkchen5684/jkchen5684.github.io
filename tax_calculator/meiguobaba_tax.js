@@ -64,7 +64,7 @@ function sumwages() {
     //Show/Hide Gross Wages
     if(wagetot>-1){
         document.getElementById("grossWageBox").style="visibility: visible;text-align:right;";
-        document.getElementById("grossWageLabel").style="visibility: visible; padding:6px";
+        document.getElementById("grossWageLabel").style="visibility: visible;";
     } else {
         document.getElementById("grossWageBox").style="visibility: hidden;text-align:right;";
         document.getElementById("grossWageLabel").style="visibility: hidden";
@@ -231,7 +231,7 @@ e:
         if(dividends>0) taxtable.push(["Dividends",dividends]);
         if(gainsLT>0) taxtable.push(["Long-term Capital Gains",gainsLT]);
         if(gainsST>0) taxtable.push(["Short-term Capital Gains",gainsST]);
-        makeTable(taxtable,['400px','200px'],'grossbox',"","","0","","1");
+        makeTable(taxtable,['150px','150px'],'grossbox',"","","0","8px","");
         //Build AGI Income Popup
         document.getElementById("agi").innerHTML="<B>Adjusted Gross Income (AGI):</B> "+dollar.format(modifiedincome)
         document.getElementById("agi?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
@@ -243,7 +243,7 @@ e:
         taxtable.push(["Deduction","Income Reduction"]);  //Set Row Headers
         taxtable.push(["Standard deduction for "+filingstatus+" filers.",brackets.deduction(filingstatus)]);
         taxtable.push(["Retirement Deduction (401k/IRA/403B)",retirement]);
-        makeTable(taxtable,['400px','200px'],'agibox',"","","0","","1");
+        makeTable(taxtable,['150px','150px'],'agibox',"","","0","8px","1");
 
         //2.  Popup for State Income Tax
         //
@@ -275,7 +275,7 @@ e:
                 taxtable.push([temp,tax]);
             }
         }
-        makeTable(taxtable,['400px','200px'],'statetaxbox',"","","0","small","1");
+        makeTable(taxtable,['200px','100px'],'statetaxbox',"","","0","8px","1");
         grandtotaltax=grandtotaltax+statetotaltax;
         document.getElementById("statetax").innerHTML=dollar.format(statetotaltax);
         document.getElementById("statetax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
@@ -285,7 +285,7 @@ e:
         //3.  Popup for Federal Income Tax
         //
         document.getElementById("fedagi").innerHTML="Taxed off your AGI: "+dollar.format(modifiedincome);
-        document.getElementById("fedagi").style.fontSize="14px";
+        document.getElementById("fedagi").style.fontSize="8px";
         taxtable=[];  //clear the array
         lbrackets=brackets.data(filingstatus);
         taxtable.push(["Income Bracket","Your Tax"]);
@@ -309,7 +309,7 @@ e:
         document.getElementById("fedtax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
         document.getElementById("fedtax").style.fontWeight="";
         document.getElementById("fedtax").style.textJustify="";
-        makeTable(taxtable,['400px','200px'],'fedtaxbox',"","","0","small","1");
+        makeTable(taxtable,['200px','100px'],'fedtaxbox',"","","0","8px","1");
         
         //4.  Payroll Tax
         //
@@ -366,11 +366,11 @@ e:
         grandtotaltax=grandtotaltax+payrolltax;
         document.getElementById("payrolltax").innerHTML=dollar.format(payrolltax)
         document.getElementById("payrolltax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
-        makeTable(taxtable,['400px','200px'],'payrolltaxbox',"","","0","small","1");
+        makeTable(taxtable,['200px','100px'],'payrolltaxbox',"","","0","8px","1");
 
          //5.  Capital Gains Tax
          document.getElementById("gainstextbox").innerHTML="Your long term capital gains of <B>"+dollar.format(gainsLT)+"</B> will be taxed on top of your Adjusted Gross Income (AGI) of <B> "+dollar.format(modifiedincome)+".</B>  In other words, your Cap Gains tax bracket is effectively ["+dollar.format(modifiedincome)+" - "+dollar.format(modifiedincome+gainsLT)+"]."
-         document.getElementById("gainstextbox").style.fontSize="14px";
+         document.getElementById("gainstextbox").style.fontSize="8px";
          taxtable=[];  //clear the array
          lbrackets=capbrackets.data(filingstatus);
          taxtable.push(["Income Bracket","Your Tax"]);
@@ -395,12 +395,11 @@ e:
          document.getElementById("gainstax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
          document.getElementById("gainstax").style.fontWeight="";
          document.getElementById("gainstax").style.textJustify="";
-         makeTable(taxtable,['400px','200px'],'gainstaxbox',"","","0","small","1");
+         makeTable(taxtable,['200px','100px'],'gainstaxbox',"","","0","8px","1");
 
         //6.  Grand Total Tax & Final Income
-        document.getElementById("totaltaxhead").style.fontSize="18px";
         document.getElementById("totaltax").innerHTML=dollar.format(grandtotaltax);
-        document.getElementById("totaltax").style="font-size:20px; text-indent:0px; color:rgb(105, 21, 21); font-weight:bold;"
+        document.getElementById("totaltax").style="font-size:16px; text-indent:0px; color:rgb(105, 21, 21); font-weight:bold;"
         document.getElementById("totaltax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
         //7.  Total Tax Box
         document.getElementById("totaltaxtext").innerHTML="This is your total tax liability"
@@ -410,11 +409,11 @@ e:
         taxtable.push(["State Income Tax",statetotaltax])
         taxtable.push(["Payroll Tax",payrolltax])
         if(captaxLT>0) {taxtable.push(["Long Term Capital Gains Tax",captaxLT])}
-        makeTable(taxtable,['400px','200px'],'totaltaxbox',"","","0","medium","1");
+        makeTable(taxtable,['200px','100px'],'totaltaxbox',"","","0","8px","1");
         //
-        document.getElementById("netincomehead").style.fontSize="20px";
+        document.getElementById("netincomehead").style.fontSize="16px";
         document.getElementById("netincome").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax-retirement));
-        document.getElementById("netincome").style="font-size:20px; text-indent:0px; color:rgb(7, 117, 51); font-weight:bold;";
+        document.getElementById("netincome").style="font-size:16px; text-indent:0px; color:rgb(7, 117, 51); font-weight:bold;";
         document.getElementById("netincome?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
         document.getElementById("netincometext").innerHTML="This is your total Pay"
         taxtable= [];
@@ -423,13 +422,13 @@ e:
         taxtable.push(["All Taxes",-grandtotaltax])        
         if(retirement>0) {
             document.getElementById("plusretirement").innerHTML="+ "+dollar.format(retirement)+" retirement.";
-            document.getElementById("plusretirement").style="font-size:20px; text-indent:5px; color:rgb(34, 122, 93);";
+            document.getElementById("plusretirement").style="font-size:16px; text-indent:5px; color:rgb(34, 122, 93);";
             taxtable.push(["Retirement",-retirement])
         }
         else {
             document.getElementById("plusretirement").style="display:none;";
         }
-        makeTable(taxtable,['400px','200px'],'netincomebox',"","","0","medium","1");
+        makeTable(taxtable,['200px','100px'],'netincomebox',"","","0","8px","1");
     }
 }
 
@@ -658,6 +657,7 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border,fontsize
     var row = table.insertRow(-1);
     for (var i = 0; i < columnCount; i++) {
         var headerCell = document.createElement("TH");
+        headerCell.style="font-size:10px;";
         headerCell.innerHTML = dataary[0][i];
         row.appendChild(headerCell);
         if (element=="dvTable"){
@@ -721,12 +721,13 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border,fontsize
     //Final Sum
     if (finalSUMflag) {
         row = table.insertRow(-1);
-        row.style = "border-top: 5px double;font-weight:bold"
+        row.style = "border-top: 5px double;font-weight:bold;"
         for (var j = 0; j < columnCount; j++) {
             var cell = row.insertCell(-1);
             console.log(currencyrow)
             if(j==currencyrow) {cell.innerHTML = dollar.format(total);}
             else {cell.innerHTML="Total"}
+            cell.style="padding-top: 5px;"
         }
     }
     var dvTable = document.getElementById(element);

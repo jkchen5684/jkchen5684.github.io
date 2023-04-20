@@ -18,7 +18,13 @@
     td {
         font-size: 10px;
     }
-  </style>
+    th {
+        font-size: 12px;
+    }
+    p {
+        font-size: 8px;
+    }
+    </style>
 </head>
 <body onload="loadcode()">
 
@@ -37,18 +43,18 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="https://jkchen5684.github.io/tax_calculator/tax.html">Tax-Calculator</a>
+              <a class="nav-link disabled" href="https://jkchen5684.github.io/tax_calculator/tax.html">Tax-Calculator</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
                   Calculators
               </a>
               <div class="dropdown-menu">
                   <a class="dropdown-item" href="https://jkchen5684.github.io/tax_calculator/tax.html">Simple Tax Calculator</a>
-                  <a class="dropdown-item" href="#">Link 2</a>
-                  <a class="dropdown-item" href="#">Link 3</a>
-                  <a class="dropdown-item" href="#">Link 4</a>
-                  <a class="dropdown-item" href="#">Link 5</a>
+                  <a class="dropdown-item" href="#">None of</a>
+                  <a class="dropdown-item" href="#">this other shit</a>
+                  <a class="dropdown-item" href="#">works.</a>
+                  <a class="dropdown-item" href="#">Eat butt</a>
                 </div>
           </li>
           </ul>
@@ -60,7 +66,7 @@
 <br>
 <main role="main" class="container">
 <div class="card">
-<table width="350">
+<table width="320">
 <tr><td>This is a basic income tax estimator, and is meant for informational purposes only</td></tr>
 <tr><td colspan="1"><input type="button" value="Default stuff" onclick="Defaultstuff()"></td></tr>
 </table>
@@ -90,8 +96,8 @@
 <tr><td colspan="2" class="narrowblank_row"></td></tr>
 </table>
 
-<table width="350" style="border:2px solid; padding:10px">
-    <tr><td width="200"></td><td width="150"></td><td width="25"></td></tr>
+<table width="320" style="border:2px solid; padding:10px">
+    <tr><td width="170"></td><td width="150"></td><td width="25"></td></tr>
     
 
     <!--Income Header-->
@@ -122,15 +128,15 @@
     <!--Blank-->
     <tr><td colspan="3" id="income12blank" class="narrowblank_row"></td></tr>
     <!--Line-->
-    <tr><td colspan="3" class="thinborder"></td></tr><tr><td colspan="3" id="income12blank" class="narrowblank_row"></td></tr>
+    <tr><td colspan="3" class="thinborder"></td></tr><tr><td colspan="3" id="" class="narrowblank_row"></td></tr>
     <!--Gross Wages-->
     <tr>
-        <td id="grossWageLabel" style="visibility: hidden; padding:6px">Gross Wages (Calculated Pre-tax)</td>
+        <td id="grossWageLabel" style="visibility: hidden; padding:2px">Pre-Tax Gross Wages</td>
         <td id="grossWageBox" style="text-align:right; visibility:hidden;">
             <span>$</span>
             <input type="number" size="50" min="0" max="1000000" step="1000" id="incomePre" value="" style="width: 100px;" class="currency" disabled="disabled"></td></tr>
     <!--Blank-->
-    <tr><td colspan="3" id="income12blank" class="blank_row"></td></tr>
+    <!--<tr><td colspan="3" id="income12blank" class="blank_row"></td></tr>-->
     <!--Optional Inputs-->
     <tr><th colspan="3" class="left" style="color: darkblue; padding:3px;" >Optional Inputs</th></tr>
     
@@ -155,9 +161,9 @@
 <p class="blank_row" id="taxerror" style="color:red; display:none;"></p>
 
 <!-- BOX 2 TAX BOTTOM-------------------------------------------------------------->
-    <table width="475" id="bottomTable" style="visibility:hidden">
+    <table width="320" id="bottomTable" style="visibility:hidden">
         <tr style="background-color:rgb(247, 155, 122);">
-            <td width="200"></td><td width="275"></td>
+            <td width="150"></td><td width="170"></td>
         </tr>
         <!--INCOME BREAKDOWN-->
         <tr><td colspan="2" style="font-weight:bold;background-color:rgb(247, 155, 122);">Income Breakdown</td></tr>
