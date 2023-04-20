@@ -17,7 +17,6 @@
 
 </head>
 <body onload="loadcode()">
-<div class="container-fluid">
 
 <!-- HEADER FOR EVERY PAGE -->
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -54,22 +53,21 @@
 
 
 <br>
-<div class="container">
+<div class="container-fluid">
 <table width="475">
 <tr><td>This is a basic income tax estimator, and is meant for informational purposes only</td></tr>
 </table>
-</div>
 <!--Tax Year Drowndown-->
-<div class="container"><table width="170">
+<table width="170">
     <tr><td class="blank_row"></td></tr>
     <tr><td class="blank_row"></td></tr>
     <tr><td width="80">Tax Year</td>
     <td width="80"><form action="/action_page.php"><select name="Taxyear" id="Taxyear" style="width: 80px; height: 25px"><option value="2022" selected>2022</option><option value="2023">2023</option></select></form></td>
 </tr>
 <tr><td><input type="button" value="Default stuff" onclick="Defaultstuff()"></td></tr></tr>
-</table></div>
+</table>
 
-<div class="container"><table width="320" >
+<table width="320" >
 <!--State Where you Live-->
 <tr><td style="padding:3px;">State where you live</td><td>
     <form action="/action_page.php">
@@ -86,9 +84,9 @@
 </select></form></td></tr>
 
 <tr><td colspan="2" class="narrowblank_row"></td></tr>
-</table></div>
+</table>
 
-<div class="container"><table width="475" style="border:2px solid; padding:10px">
+<table width="475" style="border:2px solid; padding:10px">
     <tr><td width="300"></td><td width="150"></td><td width="25"></td></tr>
     
 
@@ -149,14 +147,10 @@
     <!--Clear Button-->
     <td colspan="1" style="padding:5px;text-align:right;"><input type="button" value="Clear" onclick="Cleareverything()"></td></tr>
 </table>
-</div>
 
-<div class="container">
 <p class="blank_row" id="taxerror" style="color:red; display:none;"></p>
-</div>
 
 <!-- BOX 2 TAX BOTTOM-------------------------------------------------------------->
-<div class="container">
     <table width="475" id="bottomTable" style="visibility:hidden">
         <tr style="background-color:rgb(247, 155, 122);">
             <td width="200"></td><td width="275"></td>
@@ -285,11 +279,9 @@
         </td></tr>
         <tr><td colspan="2" id="plusretirement" ></td></tr>
     </table>
-    </div>
     <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
     <p>Last Updated 9/8 11:43AM</p>
     <table><tr><td>Copyright 2023</td></tr></table>
-
 </div>
 </body>
 </html>
