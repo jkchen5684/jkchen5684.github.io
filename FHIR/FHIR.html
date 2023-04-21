@@ -46,7 +46,7 @@
               </a>
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="https://jkchen5684.github.io/tax_calculator/tax.html">Simple Tax Calculator</a>
-                <a class="dropdown-item" href="https://jkchen5684.github.io/FHIR/FHIR.html">Epic FHIR Simulator</a>
+                <a class="dropdown-item disabled" href="https://jkchen5684.github.io/FHIR/FHIR.html">Epic FHIR Simulator</a>
                 </div>
           </li>
           </ul>
@@ -54,7 +54,36 @@
       </nav>
     </header>
   </div>
-  
+  <br>
   <!-- /HEADER -->
+  <main role="main" class="container">
+    <div class="row mb-2">
+        <div class="col-md-6">
+          <div class="card flex-md-row mb-4 box-shadow h-md-100">
+            <div class="card-body d-flex flex-column align-items-start">
+              <strong class="d-inline-block mb-2 text-primary">Patient</strong>
+              <h3 class="mb-0">
+                <a class="text-dark" href="#">Patient ID Number</a>
+              </h3>
+              <p class="card-text mb-auto">Try to get the MRN from the Simulator.</p>
+              <a href="https://vendorservices.epic.com/HyperspaceSimulator">Epic Simulator</a>
+            </div>
+            <input id="patID" class="card-img-right flex-auto d-none d-md-block" style="width: 200px; height: 100; text-align:center">
+          </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-100">
+              <div class="card-body d-flex flex-column align-items-start">
+                <strong class="d-inline-block mb-2 text-success">Patient</strong>
+                <h3 class="mb-0">
+                  <a class="text-dark" href="#">Patient DOB</a>
+                </h3>
+                <p class="card-text mb-auto">Try to get the Date of Birth from the Simulator.</p>
+                <a href="https://vendorservices.epic.com/HyperspaceSimulator">Epic Simulator</a>
+              </div>
+              <input id="patID" class="card-img-right flex-auto d-none d-md-block" style="width: 200px; height: 100; text-align:center">
+            </div>
+          </div>
+      </div>
 </body>
 </html>
