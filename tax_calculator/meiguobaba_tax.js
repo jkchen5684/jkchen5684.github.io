@@ -209,14 +209,14 @@ e:
         //Only show cap gains box if there's cap gains.
         if (gainsLT>0) {
             document.getElementById("gainstaxhead").innerHTML="LT Capital Gains Tax";
-            document.getElementById("gainstaxhead").style="visibility:visible;";
-            document.getElementById("gainstaxcell").style="visibility:visible;";
-            document.getElementById("gainstaxcell2").style="visibility:visible;";
+            document.getElementById("gainstaxhead").style="display:table-cell;";
+            document.getElementById("gainstaxcell").style="display:table-cell;";
+            document.getElementById("gainstaxcell2").style="display:table-cell;";
         } else {
             document.getElementById("gainstaxhead").innerHTML="";
-            document.getElementById("gainstaxhead").style="visibility:hidden;"; 
-            document.getElementById("gainstaxcell").style="visibility:hidden;";
-            document.getElementById("gainstaxcell2").style="visibility:hidden;";
+            document.getElementById("gainstaxhead").style="display:none;"; 
+            document.getElementById("gainstaxcell").style="display:none;";
+            document.getElementById("gainstaxcell2").style="display:none;";
         }
         //1.  Gross Income & Adjusted
         //
@@ -426,7 +426,7 @@ e:
             taxtable.push(["Retirement",-retirement])
         }
         else {
-            document.getElementById("plusretirement").style="visibility:hidden;";
+            document.getElementById("plusretirement").style="display:none;";
         }
         makeTable(taxtable,['200px','100px'],'netincomebox',"","","0","8px","1");
     }
