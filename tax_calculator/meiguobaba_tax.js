@@ -427,6 +427,7 @@ e:
         }
         else {
             document.getElementById("plusretirement").style="display:none;";
+            document.getElementById("netincome").style="border-bottom:2px solid;";
         }
         makeTable(taxtable,['200px','100px'],'netincomebox',"","","0","8px","1");
     }
