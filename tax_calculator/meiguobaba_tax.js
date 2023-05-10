@@ -15,7 +15,7 @@ function loadcode() {
 //
 //FILING STATUS
 function singleormarried(value) {
-    document.getElementById("bottomTable").style="visibility:hidden"
+    document.getElementById("bottomTable").style="display:table;"
     if (value == "married") {
         document.getElementById("income2").style = "display:table-cell; padding:3px;";
         document.getElementById("income2i").style = "display:table-cell;text-align:right;";
@@ -184,7 +184,7 @@ function CalcIncome() {
     if (errflag)
     {
         document.getElementById("taxerror").style="color:red; display:block;"
-        document.getElementById("bottomTable").style="visibility:hidden"
+        document.getElementById("bottomTable").style="display:none;"
     }
 
 e:
@@ -198,7 +198,7 @@ e:
         //                           Federal Income Tax | State Income Tax
         //
         //                           Payroll Tax (Social Security + Medicare/aide)
-        document.getElementById("bottomTable").style="background-color:bisque; border:2px solid; padding:10px; visibility:visible"
+        document.getElementById("bottomTable").style="background-color:bisque; border:2px solid; padding:10px; display:table;"
         document.getElementById("underline").style.display="";
         document.getElementById("underline2").style.display="";
         document.getElementById("underline3").style.display="";
@@ -434,7 +434,7 @@ e:
 
 function Cleareverything()
 {
-    document.getElementById("bottomTable").style="visibility:hidden"
+    document.getElementById("bottomTable").style="display:none"
     document.getElementById("income1input").value=""
     document.getElementById("income2input").value=""
     document.getElementById("incomePre").value=""
