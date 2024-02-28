@@ -15,7 +15,7 @@ function loadcode() {
 //
 //FILING STATUS
 function singleormarried(value) {
-    document.getElementById("bottomTable").style="display:table;"
+    //document.getElementById("bottomTable").style="display:table;"
     if (value == "married") {
         document.getElementById("income2").style = "display:table-cell; padding:3px;";
         document.getElementById("income2i").style = "display:table-cell;text-align:right;";
