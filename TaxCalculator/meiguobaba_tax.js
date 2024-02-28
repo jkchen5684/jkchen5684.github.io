@@ -611,7 +611,7 @@ function getstatetaxrates(state,filingstatus,taxyear)
         case "Hawaii": taxrates=[1.4,3.2,5.5,6.4,6.8,7.2,7.6,7.9,8.25,9,10,11]; break;  //OK
         case "Idaho": taxrates=[1,3,4.5,6]; break;    //OK
         case "Illinois": taxrates=[4.95]; break;  //OK
-        case "Indiana": if(taxyear=="2022") {taxrates=[3.23];} if(taxyear=="2023") {taxrates=[3.15];} break;  //OK
+        case "Indiana": if(taxyear=="2022") {taxrates=[3.23];} if(taxyear=="2023") {taxrates=[3.15];} if(taxyear=="2024") {taxrates=[3.05];} break;  //OK
         case "Iowa": taxrates=[.33,.67,2.25,4.14,5.63,5.96,6.25,7.44,8.53]; break;  //OK
         case "Kansas": taxrates=[3.1,5.25,5.7]; break;  //OK
         case "Kentucky": taxrates=[5]; break;  //OK
