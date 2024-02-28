@@ -106,15 +106,19 @@ function CalcIncome() {
         marriedbrackets2022:[0,20550,83550,178150,340100,431900,647850],  //use data
         singlebrackets2023:[0,11000,44725,95375,182100,231250,578125],  //use data
         marriedbrackets2023:[0,22000,89450,190750,364200,462500,693750],  //use data
+        singlebrackets2023:[0,11600,47150,100525,191950,243725,609350],  //use data
+        marriedbrackets2023:[0,23200,94300,201050,383900,487450,731200],  //use data
         taxrates:[0,.1,.12,.22,.24,.32,.35,.37],
         data : function(mode) {
             if (mode=="single") {
                 if(taxyear==="2022") {return this.singlebrackets2022;}
                 if(taxyear==="2023") {return this.singlebrackets2023;}
+                if(taxyear==="2024") {return this.singlebrackets2024;}
             }
             else {
                 if(taxyear==="2022") {return this.marriedbrackets2022;}
                 if(taxyear==="2023") {return this.marriedbrackets2023;}
+                if(taxyear==="2024") {return this.marriedbrackets2024;}
                 
             }
         },
@@ -122,10 +126,12 @@ function CalcIncome() {
             if (mode=="single") {
                 if(taxyear==="2022") {return 12950;}
                 if(taxyear==="2023") {return 13850;}
+                if(taxyear==="2024") {return 14600;}
             }
             else { 
                 if(taxyear==="2022") {return 25900;}
                 if(taxyear==="2023") {return 27700;}
+                if(taxyear==="2024") {return 29200;}
             }
         }
     };
@@ -146,15 +152,19 @@ function CalcIncome() {
         marriedbrackets2022:[0,83350,517200],  //use data
         singlebrackets2023:[0,44625,492300],  //use data
         marriedbrackets2023:[0,89250,553850],  //use data
+        singlebrackets2024:[0,47025,518900],  //use data
+        marriedbrackets2024:[0,94050,583750],  //use data
         taxrates:[0,0,.15,.2],
         data : function(mode) {
             if (mode=="single") {
                 if(taxyear==="2022") {return this.singlebrackets2022;}
                 if(taxyear==="2023") {return this.singlebrackets2023;}
+                if(taxyear==="2024") {return this.singlebrackets2024;}
             }
             else {
                 if(taxyear==="2022") {return this.marriedbrackets2022;}
                 if(taxyear==="2023") {return this.marriedbrackets2023;}
+                if(taxyear==="2024") {return this.marriedbrackets2024;}
                 
             }
         },
@@ -168,13 +178,13 @@ function CalcIncome() {
         document.getElementById("taxerror").innerHTML="Please Input an Gross Income to Calculate Taxes";
         document.getElementById("incomePre").value=""
     } else if(filingstatus=="single" && retirement>22500) {
-        errflag=1;
-        loadDef(2);
-        document.getElementById("taxerror").innerHTML="You cannot contribute more than $22,500 per year as a single filer.";
+        //errflag=1;
+        //loadDef(2);
+        //document.getElementById("taxerror").innerHTML="You cannot contribute more than $22,500 per year as a single filer.";
     } else if(filingstatus=="married" && retirement>45000) {
-        errflag=1;
-        loadDef(2);
-        document.getElementById("taxerror").innerHTML="You cannot contribute more than $45,000 per year filing jointly";
+        //errflag=1;
+        //loadDef(2);
+        //document.getElementById("taxerror").innerHTML="You cannot contribute more than $45,000 per year filing jointly";
     }
     if(filingstatus=="married" && (!document.getElementById("income1input").value || !document.getElementById("income2input").value)) {
         if(document.getElementById("income1input").value>0) {
