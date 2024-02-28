@@ -28,7 +28,7 @@ function singleormarried(value) {
         document.getElementById("req2").style="display: none;";
         document.getElementById("req2dets").style="color: Red;";
         document.getElementById("req2dets").className="fa fa-dot-circle-o";
-        //sumwages()
+        sumwages()
     }
 }
 //
@@ -177,9 +177,17 @@ function CalcIncome() {
         document.getElementById("taxerror").innerHTML="You cannot contribute more than $45,000 per year filing jointly";
     }
     if(filingstatus=="married" && (!document.getElementById("income1input").value || !document.getElementById("income2input").value)) {
-        errflag=1;
-        loadDef(2);
-        document.getElementById("taxerror").innerHTML="Please enter an income for both income earners, if only one person has an income, input a 0 for the other.";   
+        if(document.getElementById("income1input").value) {
+            document.getElementById("income2input").value = 0
+        }
+        else if (document.getElementById("income2input").value) {
+            document.getElementById("income2input").value = 0
+        }
+        else {
+                errflag=1;
+                loadDef(2);
+                document.getElementById("taxerror").innerHTML="Please enter an income for both income earners, if only one person has an income, input a 0 for the other.";
+        }   
     }
     if (errflag)
     {
