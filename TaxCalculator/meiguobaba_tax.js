@@ -448,14 +448,17 @@ e:
             document.getElementById("plusretirement").innerHTML="+ "+dollar.format(retirement)+" retirement.";
             document.getElementById("plusretirement").style="font-size:16px; text-indent:5px; color:rgb(34, 122, 93);";
             taxtable.push(["Retirement",-retirement])
+            document.getElementById("plusretirement").style="border-bottom:2px solid;";
+            document.getElementById("netincomerow").style="border-bottom:none;";
         }
         else {
             document.getElementById("plusretirement").style="display:none;";
             document.getElementById("netincomerow").style="border-bottom:2px solid;";
+            document.getElementById("plusretirement").style="border-bottom:none;";
         }
         makeTable(taxtable,['200px','100px'],'netincomebox',"","","0","8px","1");
-        document.getElementById("grandtotal").innerHTML="= "+dollar.format(parseFloat(totalincome-grandtotaltax+retirement));
-        document.getElementById("grandtotal").style="font-size:20px; text-indent:0px; color:rgb(10, 217, 240); font-weight:bold;";
+        document.getElementById("grandtotal").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax+retirement));
+        document.getElementById("grandtotal").style="font-size:20px; text-indent:0px; color:rgb(36, 126, 179); font-weight:bold;";
     }
 }
 
