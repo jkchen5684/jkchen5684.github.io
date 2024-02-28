@@ -454,6 +454,8 @@ e:
             document.getElementById("netincomerow").style="border-bottom:2px solid;";
         }
         makeTable(taxtable,['200px','100px'],'netincomebox',"","","0","8px","1");
+        document.getElementById("grandtotal").innerHTML="= "+dollar.format(parseFloat(totalincome-grandtotaltax+retirement));
+        document.getElementById("grandtotal").style="font-size:20px; text-indent:0px; color:rgb(10, 217, 240); font-weight:bold;";
     }
 }
 
