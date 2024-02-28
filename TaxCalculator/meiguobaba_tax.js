@@ -28,7 +28,7 @@ function singleormarried(value) {
         document.getElementById("req2").style="display: none;";
         document.getElementById("req2dets").style="color: Red;";
         document.getElementById("req2dets").className="fa fa-dot-circle-o";
-        sumwages()
+        //sumwages()
     }
 }
 //
