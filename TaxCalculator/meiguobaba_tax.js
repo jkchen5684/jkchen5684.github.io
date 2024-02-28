@@ -347,7 +347,6 @@ e:
         if (filingstatus=="single") {
             tax=Math.min(payrollincome,147000)*.062;
             payrolltax=tax;
-            console.log(tax)
             if(tax===9114) {taxtable.push(["• <B>Social Security</B> (6.2% of the $147,000 income cap)",tax])}
             else {taxtable.push(["• <B>Social Security</B> (6.2% of "+dollar.format(payrollincome)+" of income)",tax])}
             tax=payrollincome*.0145;
@@ -750,7 +749,6 @@ function makeTable(dataary,widthary,element,boldcolumn,boldvalue,border,fontsize
         row.style = "border-top: 5px double;font-weight:bold;"
         for (var j = 0; j < columnCount; j++) {
             var cell = row.insertCell(-1);
-            console.log(currencyrow)
             if(j==currencyrow) {cell.innerHTML = dollar.format(total);}
             else {cell.innerHTML="Total"}
             cell.style="padding-top: 5px;"
