@@ -446,9 +446,8 @@ e:
         taxtable.push(["All Taxes",-grandtotaltax])        
         if(retirement>0) {
             document.getElementById("plusretirement").innerHTML="+ "+dollar.format(retirement)+" retirement.";
-            document.getElementById("plusretirement").style="font-size:16px; text-indent:5px; color:rgb(34, 122, 93);";
+            document.getElementById("plusretirement").style="font-size:16px; text-indent:5px; color:rgb(34, 122, 93); border-bottom:2px solid;";
             taxtable.push(["Retirement",-retirement])
-            document.getElementById("plusretirement").style="border-bottom:2px solid;";
             document.getElementById("netincomerow").style="border-bottom:none;";
         }
         else {
