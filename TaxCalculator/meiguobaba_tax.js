@@ -179,9 +179,13 @@ function CalcIncome() {
     if(filingstatus=="married" && (!document.getElementById("income1input").value || !document.getElementById("income2input").value)) {
         if(document.getElementById("income1input").value>0) {
             document.getElementById("income2input").value = 0
+            document.getElementById("req1dets").className="fa fa-check-circle-o";
+            document.getElementById("req1dets").style="color:Green";
         }
         else if (document.getElementById("income2input").value>0) {
             document.getElementById("income1input").value = 0
+            document.getElementById("req1dets").className="fa fa-check-circle-o";
+            document.getElementById("req1dets").style="color:Green";
         }
         else {
                 errflag=1;
