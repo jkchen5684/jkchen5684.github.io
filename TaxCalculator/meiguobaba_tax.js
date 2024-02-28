@@ -244,9 +244,9 @@ e:
         //
         var taxtable = new Array();
         modifiedincome=Math.max(fedincome-brackets.deduction(filingstatus)-retirement,0);  //AGI
-        console.log("filingstatus: ",filingstatus)
-        console.log("retirement: ",retirement)
-        console.log("brackets.deduction(filingstatus): ",brackets.deduction(filingstatus))
+        console.log("filingstatus: "+filingstatus)
+        console.log("retirement: "+retirement)
+        console.log("brackets: "+brackets.deduction(filingstatus))
         document.getElementById("gross income").innerHTML="<B>Total Income:</B> "+dollar.format(totalincome);
         document.getElementById("gross?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
         //Build Total Income Popup
