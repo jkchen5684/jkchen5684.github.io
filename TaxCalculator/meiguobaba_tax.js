@@ -95,7 +95,7 @@ function CalcIncome() {
     var gainsLT=parseFloat(document.getElementById("gainsLT").value);  if(!gainsLT) gainsLT=0;
     var gainsST=parseFloat(document.getElementById("gainsST").value);  if(!gainsST) gainsST=0;
     var totalincome=wages+dividends+gainsLT+gainsST;
-    if(taxyear===null) { taxyear="2023" }
+    if(taxyear===null) { taxyear="2024" }
     const dollar = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -106,8 +106,8 @@ function CalcIncome() {
         marriedbrackets2022:[0,20550,83550,178150,340100,431900,647850],  //use data
         singlebrackets2023:[0,11000,44725,95375,182100,231250,578125],  //use data
         marriedbrackets2023:[0,22000,89450,190750,364200,462500,693750],  //use data
-        singlebrackets2023:[0,11600,47150,100525,191950,243725,609350],  //use data
-        marriedbrackets2023:[0,23200,94300,201050,383900,487450,731200],  //use data
+        singlebrackets2024:[0,11600,47150,100525,191950,243725,609350],  //use data
+        marriedbrackets2024:[0,23200,94300,201050,383900,487450,731200],  //use data
         taxrates:[0,.1,.12,.22,.24,.32,.35,.37],
         data : function(mode) {
             if (mode=="single") {
