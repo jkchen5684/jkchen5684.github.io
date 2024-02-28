@@ -177,11 +177,11 @@ function CalcIncome() {
         document.getElementById("taxerror").innerHTML="You cannot contribute more than $45,000 per year filing jointly";
     }
     if(filingstatus=="married" && (!document.getElementById("income1input").value || !document.getElementById("income2input").value)) {
-        if(document.getElementById("income1input").value) {
+        if(document.getElementById("income1input").value>0) {
             document.getElementById("income2input").value = 0
         }
-        else if (document.getElementById("income2input").value) {
-            document.getElementById("income2input").value = 0
+        else if (document.getElementById("income2input").value>0) {
+            document.getElementById("income1input").value = 0
         }
         else {
                 errflag=1;
