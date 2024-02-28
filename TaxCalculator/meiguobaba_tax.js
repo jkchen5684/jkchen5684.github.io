@@ -189,8 +189,8 @@ function CalcIncome() {
     if(filingstatus=="married" && (!document.getElementById("income1input").value || !document.getElementById("income2input").value)) {
         if(document.getElementById("income1input").value>0) {
             document.getElementById("income2input").value = 0
-            document.getElementById("req1dets").className="fa fa-check-circle-o";
-            document.getElementById("req1dets").style="color:Green";
+            document.getElementById("req2dets").className="fa fa-check-circle-o";
+            document.getElementById("req2dets").style="color:Green";
         }
         else if (document.getElementById("income2input").value>0) {
             document.getElementById("income1input").value = 0
@@ -446,9 +446,11 @@ e:
         taxtable.push(["All Taxes",-grandtotaltax])        
         if(retirement>0) {
             document.getElementById("plusretirement").innerHTML="+ "+dollar.format(retirement)+" retirement.";
-            document.getElementById("plusretirement").style="font-size:16px; text-indent:5px; color:rgb(34, 122, 93); border-bottom:2px solid;";
+            document.getElementById("plusretirement").style="font-size:16px; text-indent:5px; color:rgb(34, 122, 93); border-bottom:2px solid; border-color: black;";
             taxtable.push(["Retirement",-retirement])
             document.getElementById("netincomerow").style="border-bottom:none;";
+            document.getElementById("grandtotal").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax+retirement));
+            document.getElementById("grandtotal").style="font-size:20px; text-indent:0px; color:rgb(36, 126, 179); font-weight:bold;";
         }
         else {
             document.getElementById("plusretirement").style="display:none;";
@@ -456,8 +458,7 @@ e:
             document.getElementById("plusretirement").style="border-bottom:none;";
         }
         makeTable(taxtable,['200px','100px'],'netincomebox',"","","0","8px","1");
-        document.getElementById("grandtotal").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax+retirement));
-        document.getElementById("grandtotal").style="font-size:20px; text-indent:0px; color:rgb(36, 126, 179); font-weight:bold;";
+        
     }
 }
 
@@ -474,6 +475,9 @@ function Cleareverything()
     document.getElementById("ira").value="";
     document.getElementById("dividends").value="";
     document.getElementById("gainsLT").value="";
+    document.getElementById("gainsST").value="";
+    document.getElementById("grandtotal").value=""
+    document.getElementById("plusretirement").value=""
 }
 
 function Defaultstuff()
