@@ -449,7 +449,7 @@ e:
             document.getElementById("plusretirement").style="font-size:16px; text-indent:5px; color:rgb(34, 122, 93); border-bottom:2px solid; border-color: black;";
             taxtable.push(["Retirement",-retirement])
             document.getElementById("netincomerow").style="border-bottom:none;";
-            document.getElementById("grandtotal").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax+retirement));
+            document.getElementById("grandtotal").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax));
             document.getElementById("grandtotal").style="font-size:20px; text-indent:0px; color:rgb(36, 126, 179); font-weight:bold;";
         }
         else {
