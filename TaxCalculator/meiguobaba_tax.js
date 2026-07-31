@@ -263,7 +263,8 @@ e:
         //1.  Gross Income & Adjusted
         //
         var taxtable = new Array();
-        modifiedincome=Math.max(fedincome-brackets.deduction(filingstatus)-retirement,0);  //AGI
+        modifiedincome=Math.max(fedincome-brackets.deduction(filingstatus)-retirement,0);  //AGI FEDERAL
+        agistate=Math.max(fedincome-retirement,0);  //AGI STATE
         console.log("filingstatus: "+filingstatus)
         console.log("retirement: "+retirement)
         console.log("brackets: "+brackets.deduction(filingstatus))
@@ -278,9 +279,9 @@ e:
         if(gainsST>0) taxtable.push(["Short-term Capital Gains",gainsST]);
         makeTable(taxtable,['150px','150px'],'grossbox',"","","0","8px","");
         //Build AGI Income Popup
-        document.getElementById("agi").innerHTML="<B>Adjusted Gross Income (AGI):</B> "+dollar.format(modifiedincome)
+        document.getElementById("agi").innerHTML="<B>Federal Modified Income:</B> "+dollar.format(modifiedincome)
         document.getElementById("agi?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
-        document.getElementById("agitext").innerHTML="AGI starts with your Gross Income of <B>"+dollar.format(fedincome)+"</B> (Wages: "+dollar.format(wages)
+        document.getElementById("agitext").innerHTML="Modified Federal Income starts with your Gross Income of <B>"+dollar.format(fedincome)+"</B> (Wages: "+dollar.format(wages)
         if(dividends>0) document.getElementById("agitext").insertAdjacentHTML("beforeend"," + Interest & Dividends: "+dollar.format(dividends));
         if(gainsST>0) document.getElementById("agitext").insertAdjacentHTML("beforeend"," + Short-term Cap Gains: "+dollar.format(gainsST));
         document.getElementById("agitext").insertAdjacentHTML("beforeend",") and reduces it by the amounts listed in the table below.");
@@ -293,7 +294,7 @@ e:
         //2.  Popup for State Income Tax
         //
         taxtable = [];
-        document.getElementById("stateagi").innerHTML="Taxed off your AGI: "+dollar.format(modifiedincome);
+        document.getElementById("stateagi").innerHTML="Taxed off your Federal AGI: "+dollar.format(agistate);
         document.getElementById("stateagi").style.fontSize="14px";
         taxtable.push(["Income Bracket","Your Tax"]);  //Set Row Headers
         ltaxrates=statebrackets.taxrates(state,filingstatus);  //Grab Taxrates for state
@@ -305,7 +306,7 @@ e:
                 if (!val&&val!=0) { val="and up"; lbrackets[i]=99999999999} else val=dollar.format(val);
                 if (i==0)
                 {
-                    tax=Math.min(modifiedincome,lbrackets[i])*(rate/100);
+                    tax=Math.min(agistate,lbrackets[i])*(rate/100);
                     if (val=="and up") {
                         if (rate==0) temp="&nbsp&nbsp • "+state+" has no income tax";
                         else temp="&nbsp&nbsp • "+state+" has a flat "+rate+"% on all income";
@@ -313,7 +314,7 @@ e:
                     else temp="&nbsp&nbsp • [$0 - "+val+"] - Taxed @ "+rate+"%";
                 }
                 else{
-                    tax=Math.min(Math.max(modifiedincome-lbrackets[i-1],0),lbrackets[i]-lbrackets[i-1])*(rate/100);
+                    tax=Math.min(Math.max(agistate-lbrackets[i-1],0),lbrackets[i]-lbrackets[i-1])*(rate/100);
                     temp="&nbsp&nbsp • ["+dollar.format(lbrackets[i-1])+" - "+val+"] - Taxed @ "+rate+"%";
                 }
                 statetotaltax=statetotaltax+tax;
@@ -324,7 +325,7 @@ e:
         grandtotaltax=grandtotaltax+statetotaltax;
         document.getElementById("statetax").innerHTML=dollar.format(statetotaltax);
         document.getElementById("statetax?").innerHTML=" <i class=\"fa fa-question-circle\"></i>";
-        val=modifiedincome;
+        val=agistate;
         //modifiedincome=modifiedincome-statetotaltax;  //No Longer Relevant - SALT Deduction requires itemization.
         
         //3.  Popup for Federal Income Tax
@@ -377,8 +378,8 @@ e:
             else {
                 taxtable.push(["• <B>Medicare</B> (1.45% of "+dollar.format(payrollincome)+" of income)",tax]);
                 payrolltax=payrolltax+tax;
-                tax=payrollincome*.009;
-                taxtable.push(["• <B>Additional Medicare</B> (0.9% of "+dollar.format(payrollincome)+" of income)",tax]);
+                tax=(200000-payrollincome)*.009;
+                taxtable.push(["• <B>Additional Medicare</B> (0.9% of "+dollar.format(200000-payrollincome)+" of income over $200k)",tax]);
                 payrolltax=payrolltax+tax;
             }
         } 
@@ -471,6 +472,8 @@ e:
             document.getElementById("netincomerow").style="border-bottom:none;";
             document.getElementById("grandtotal").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax));
             document.getElementById("grandtotal").style="font-size:20px; text-indent:0px; color:rgb(36, 126, 179); font-weight:bold;";
+            document.getElementById("monthlytotal").innerHTML=dollar.format(parseFloat((totalincome-grandtotaltax-retirement)/12))+"/mo Takehome + "+ dollar.format(retirement)+"/mo retirement";
+            document.getElementById("monthlytotal").style="font-size:14px; text-indent:0px; color:rgb(36, 57, 179); font-weight:bold;";
         }
         else {
             document.getElementById("plusretirement").style="display:none;";
@@ -497,6 +500,7 @@ function Cleareverything()
     document.getElementById("gainsLT").value="";
     document.getElementById("gainsST").value="";
     document.getElementById("grandtotal").value=""
+    document.getElementById("monthlytotal").value=""
     document.getElementById("plusretirement").value=""
 }
 
