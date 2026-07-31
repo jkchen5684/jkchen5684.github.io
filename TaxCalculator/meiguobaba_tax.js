@@ -102,23 +102,31 @@ function CalcIncome() {
         minimumFractionDigits: 0
     });
     let brackets = {
-        singlebrackets2022:[0,10275,41775,89075,170050,215950,539900],  //use data
-        marriedbrackets2022:[0,20550,83550,178150,340100,431900,647850],  //use data
-        singlebrackets2023:[0,11000,44725,95375,182100,231250,578125],  //use data
-        marriedbrackets2023:[0,22000,89450,190750,364200,462500,693750],  //use data
-        singlebrackets2024:[0,11600,47150,100525,191950,243725,609350],  //use data
-        marriedbrackets2024:[0,23200,94300,201050,383900,487450,731200],  //use data
+        singlebrackets2022:[0,10275,41775,89075,170050,215950,539900],  
+        marriedbrackets2022:[0,20550,83550,178150,340100,431900,647850],  
+        singlebrackets2023:[0,11000,44725,95375,182100,231250,578125],  
+        marriedbrackets2023:[0,22000,89450,190750,364200,462500,693750],  
+        singlebrackets2024:[0,11600,47150,100525,191950,243725,609350],  
+        marriedbrackets2024:[0,23200,94300,201050,383900,487450,731200],  
+        singlebrackets2025:[0,11925,48475,103350,197300,250525,626350],  
+        marriedbrackets2025:[0,23850,96950,206700,394600,501050,751600],  
+        singlebrackets2026:[0,12400,50400,105700,201775,256225,640600],  
+        marriedbrackets2026:[0,24800,100800,211400,403550,512450,768700],  
         taxrates:[0,.1,.12,.22,.24,.32,.35,.37],
         data : function(mode) {
             if (mode=="single") {
                 if(taxyear==="2022") {return this.singlebrackets2022;}
                 if(taxyear==="2023") {return this.singlebrackets2023;}
                 if(taxyear==="2024") {return this.singlebrackets2024;}
+                if(taxyear==="2025") {return this.singlebrackets2025;}
+                if(taxyear==="2026") {return this.singlebrackets2026;}
             }
             else {
                 if(taxyear==="2022") {return this.marriedbrackets2022;}
                 if(taxyear==="2023") {return this.marriedbrackets2023;}
                 if(taxyear==="2024") {return this.marriedbrackets2024;}
+                if(taxyear==="2025") {return this.marriedbrackets2025;}
+                if(taxyear==="2026") {return this.marriedbrackets2026;}
                 
             }
         },
@@ -127,11 +135,15 @@ function CalcIncome() {
                 if(taxyear==="2022") {return 12950;}
                 if(taxyear==="2023") {return 13850;}
                 if(taxyear==="2024") {return 14600;}
+                if(taxyear==="2025") {return 15750;}
+                if(taxyear==="2026") {return 16100;}
             }
             else { 
                 if(taxyear==="2022") {return 25900;}
                 if(taxyear==="2023") {return 27700;}
                 if(taxyear==="2024") {return 29200;}
+                if(taxyear==="2025") {return 31500;}
+                if(taxyear==="2026") {return 32200;}
             }
         }
     };
@@ -148,23 +160,31 @@ function CalcIncome() {
         
     }
     let capbrackets = {
-        singlebrackets2022:[0,41675,459750],  //use data
-        marriedbrackets2022:[0,83350,517200],  //use data
-        singlebrackets2023:[0,44625,492300],  //use data
-        marriedbrackets2023:[0,89250,553850],  //use data
-        singlebrackets2024:[0,47025,518900],  //use data
-        marriedbrackets2024:[0,94050,583750],  //use data
+        singlebrackets2022:[0,41675,459750],  
+        marriedbrackets2022:[0,83350,517200],  
+        singlebrackets2023:[0,44625,492300],  
+        marriedbrackets2023:[0,89250,553850],  
+        singlebrackets2024:[0,47025,518900],  
+        marriedbrackets2024:[0,94050,583750],
+        singlebrackets2025:[0,48350,533400],  
+        marriedbrackets2025:[0,96700,600050],  
+        singlebrackets2026:[0,49450,545500],  
+        marriedbrackets2026:[0,98900,613700],    
         taxrates:[0,0,.15,.2],
         data : function(mode) {
             if (mode=="single") {
                 if(taxyear==="2022") {return this.singlebrackets2022;}
                 if(taxyear==="2023") {return this.singlebrackets2023;}
                 if(taxyear==="2024") {return this.singlebrackets2024;}
+                if(taxyear==="2025") {return this.singlebrackets2025;}
+                if(taxyear==="2026") {return this.singlebrackets2026;}
             }
             else {
                 if(taxyear==="2022") {return this.marriedbrackets2022;}
                 if(taxyear==="2023") {return this.marriedbrackets2023;}
                 if(taxyear==="2024") {return this.marriedbrackets2024;}
+                if(taxyear==="2025") {return this.marriedbrackets2025;}
+                if(taxyear==="2026") {return this.marriedbrackets2026;}
                 
             }
         },
@@ -177,11 +197,11 @@ function CalcIncome() {
         loadDef(2);
         document.getElementById("taxerror").innerHTML="Please Input an Gross Income to Calculate Taxes";
         document.getElementById("incomePre").value=""
-    } else if(filingstatus=="single" && retirement>22500) {
+    } else if(filingstatus=="single" && retirement>30000) {
         //errflag=1;
         //loadDef(2);
         //document.getElementById("taxerror").innerHTML="You cannot contribute more than $22,500 per year as a single filer.";
-    } else if(filingstatus=="married" && retirement>45000) {
+    } else if(filingstatus=="married" && retirement>60000) {
         //errflag=1;
         //loadDef(2);
         //document.getElementById("taxerror").innerHTML="You cannot contribute more than $45,000 per year filing jointly";
@@ -345,9 +365,9 @@ e:
         if(retirement>0) document.getElementById("payrolltaxtext").insertAdjacentHTML("beforeend","Note, your "+dollar.format(retirement)+" retirement contribution still gets taxed for Social Security and Medicare.");
         taxtable.push(["Tax Type","Your Tax"]);
         if (filingstatus=="single") {
-            tax=Math.min(payrollincome,147000)*.062;
+            tax=Math.min(payrollincome,184500)*.062;
             payrolltax=tax;
-            if(tax===9114) {taxtable.push(["• <B>Social Security</B> (6.2% of the $147,000 income cap)",tax])}
+            if(tax===9114) {taxtable.push(["• <B>Social Security</B> (6.2% of the 184,500 income cap)",tax])}
             else {taxtable.push(["• <B>Social Security</B> (6.2% of "+dollar.format(payrollincome)+" of income)",tax])}
             tax=payrollincome*.0145;
             if(payrollincome<200000) {
