@@ -95,7 +95,7 @@ function CalcIncome() {
     var gainsLT=parseFloat(document.getElementById("gainsLT").value);  if(!gainsLT) gainsLT=0;
     var gainsST=parseFloat(document.getElementById("gainsST").value);  if(!gainsST) gainsST=0;
     var totalincome=wages+dividends+gainsLT+gainsST;
-    if(taxyear===null) { taxyear="2024" }
+    if(taxyear===null) { taxyear="2026" }
     const dollar = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
