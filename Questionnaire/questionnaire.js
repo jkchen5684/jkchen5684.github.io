@@ -1,6 +1,20 @@
 const questions = [
-  { id:'stage', topic:'Your context', text:'Which life stage feels closest right now?', help:'This lets us frame the benchmark—not judge your path.', answers:[['early','Getting started','Building independence or a new chapter'],['growing','Building & growing','Career, family, or income is taking shape'],['established','Established','Focused on protecting and expanding progress'],['transition','In transition','A big change is reshaping my finances']] },
-  { id:'buffer', topic:'Your foundation', text:'If an unexpected $1,000 expense showed up, what would happen?', help:'Choose the closest honest answer.', answers:[['none','I’d need to borrow or miss a bill'],['thin','I could cover it, but it would sting'],['some','I could cover it from savings'],['strong','It’s covered and my plan stays on track']] },
+  { id:'stage', topic:'Your context', text:'Which life stage feels closest right now?', help:'This lets us frame the benchmark—not judge your path.', 
+    answers:[
+    ['early','Getting started','Building independence or a new chapter'],
+    ['growing','Building & growing','Career, family, or income is taking shape'],
+    ['established','Established','Focused on protecting and expanding progress'],
+    ['transition','In transition','A big change is reshaping my finances']
+  ] 
+  },
+  { id:'buffer', topic:'Your foundation', text:'If an unexpected $1,000 expense showed up, what would happen?', help:'Choose the closest honest answer.', 
+    answers:[
+    ['none','I’d need to borrow or miss a bill'],
+    ['thin','I could cover it, but it would sting'],
+    ['some','I could cover it from savings'],
+    ['strong','It’s covered and my plan stays on track']
+  ]
+  },
   { id:'spending', topic:'Your foundation', text:'How often do you know where your money went last month?', help:'A simple awareness habit has outsized impact.', answers:[['never','Rarely or never'],['rough','I have a rough idea'],['monthly','I review it most months'],['system','I use a budget or automated system']] },
   { id:'debt', topic:'Your resilience', text:'How does your debt feel right now?', help:'Include credit cards, loans, and payments that create stress.', answers:[['heavy','It feels heavy or growing'],['managed','I’m paying it down, but it limits options'],['low','It’s manageable and on a plan'],['clear','I have little high-interest debt']] },
   { id:'income', topic:'Your resilience', text:'If your income paused tomorrow, how long could essentials be covered?', help:'Think rent, food, transportation, insurance, and minimum payments.', answers:[['zero','Less than a month'],['month','About 1–2 months'],['three','About 3–5 months'],['six','Six months or more']] },
