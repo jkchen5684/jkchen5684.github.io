@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A private, educational financial wellness check-in." />
+    <title>Money Compass — Financial Wellness Check</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="#start" aria-label="Money Compass home"><span class="brand-mark">↗</span> money compass</a>
+        <p class="private-note"><span>●</span> Your answers stay in this browser</p>
+      </header>
+
+      <section id="start" class="screen intro active" aria-labelledby="intro-title">
+        <p class="eyebrow">A 3-minute financial wellness check</p>
+        <h1 id="intro-title">See where your money habits can take you.</h1>
+        <p class="lede">Answer a few judgment-free questions. We’ll map your financial foundation, resilience, and momentum—then give you a practical next move.</p>
+        <div class="intro-actions">
+          <button class="button primary" id="start-button">Start my check-in <span>→</span></button>
+          <p>No account. No financial data collected.</p>
+        </div>
+        <div class="pillars" aria-label="What you will receive">
+          <div><span class="pillar-number">01</span><strong>Your scorecard</strong><p>Three focused scores—not a vague grade.</p></div>
+          <div><span class="pillar-number">02</span><strong>Peer context</strong><p>A broad benchmark by life stage.</p></div>
+          <div><span class="pillar-number">03</span><strong>A next move</strong><p>Small actions with real leverage.</p></div>
+        </div>
+      </section>
+
+      <section id="quiz" class="screen quiz" aria-live="polite">
+        <div class="quiz-meta"><span id="progress-label">Question 1 of 8</span><button id="restart-button" class="text-button">Start over</button></div>
+        <div class="progress-track"><span id="progress-bar"></span></div>
+        <p class="eyebrow" id="question-topic">Your foundation</p>
+        <h2 id="question-text"></h2>
+        <p id="question-help" class="question-help"></p>
+        <div id="answers" class="answers"></div>
+        <div class="quiz-footer"><span>Educational estimate · not financial advice</span><span id="step-dots" class="step-dots"></span></div>
+      </section>
+
+      <section id="results" class="screen results" aria-live="polite">
+        <p class="eyebrow">Your Money Compass</p>
+        <h2 id="result-title">A solid base, with room to build resilience.</h2>
+        <p class="result-summary" id="result-summary"></p>
+        <div class="score-grid" id="score-grid"></div>
+        <section class="peer-card">
+          <div class="peer-copy"><p class="card-label">Your peer context</p><h3 id="peer-title"></h3><p id="peer-copy"></p></div>
+          <div class="peer-chart" aria-label="Your score compared to peer range"><div class="range"><span class="range-fill"></span><i id="peer-marker"></i></div><div class="range-labels"><span>Building</span><span>Strong</span></div></div>
+        </section>
+        <section class="recommendations"><p class="card-label">Your next best moves</p><div id="recommendation-list"></div></section>
+        <div class="result-actions"><button id="retake-button" class="button secondary">Retake check-in</button><button id="copy-button" class="button primary">Copy my action plan</button></div>
+        <p class="disclaimer">This is an educational tool, not individualized financial, investment, or tax advice. Benchmarks are illustrative and based on broad self-reported financial wellness patterns.</p>
+      </section>
+    </main>
+    <script src="questionnaire.js"></script>
+  </body>
+</html>
