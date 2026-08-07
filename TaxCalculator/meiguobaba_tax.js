@@ -472,7 +472,7 @@ e:
             document.getElementById("netincomerow").style="border-bottom:none;";
             document.getElementById("grandtotal").innerHTML=dollar.format(parseFloat(totalincome-grandtotaltax));
             document.getElementById("grandtotal").style="font-size:20px; text-indent:0px; color:rgb(36, 126, 179); font-weight:bold;";
-            document.getElementById("monthlytotal").innerHTML=dollar.format(parseFloat((totalincome-grandtotaltax-retirement)/12))+"/mo Takehome + "+ dollar.format(retirement)+"/mo retirement";
+            document.getElementById("monthlytotal").innerHTML=dollar.format(parseFloat((totalincome-grandtotaltax-retirement)/12))+"/mo + "+ dollar.format(retirement/12)+"/mo retirement";
             document.getElementById("monthlytotal").style="font-size:14px; text-indent:0px; color:rgb(36, 57, 179); font-weight:bold;";
         }
         else {
